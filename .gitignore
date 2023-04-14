@@ -107,3 +107,10 @@ dist
 local.settings.json
 
 .vscode/
+
+# cert
+cert/*
+.pfx
+.pem
+.key
+.cer

@@ -12,23 +12,27 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         return {
-          CaseType: 'Sak',
-          Project: '20-15',
-          Title: 'En sakstittel',
-          UnofficialTitle: 'En sakstittel med noe snusk i seg som ikke skal vises til media',
-          Status: 'B',
-          JournalUnit: 'Sentralarkiv',
-          SubArchive: 'Sakarkiv',
-          ArchiveCodes: [
-            {
-              ArchiveCode: '035',
-              ArchiveType: 'FELLESKLASSE PRINSIPP',
-              Sort: 1
-            }
-          ],
-          ResponsibleEnterpriseNumber: '45678912',
-          ResponsiblePersonEmail: 'fornavn.etternavn@domene.no',
-          AccessGroup: 'tilgangsgruppe'
+          service: 'CaseService',
+          method: 'CreateCase',
+          parameter: {
+            CaseType: 'Sak',
+            Project: '20-15',
+            Title: 'En sakstittel',
+            UnofficialTitle: 'En sakstittel med noe snusk i seg som ikke skal vises til media',
+            Status: 'B',
+            JournalUnit: 'Sentralarkiv',
+            SubArchive: 'Sakarkiv',
+            ArchiveCodes: [
+              {
+                ArchiveCode: '035',
+                ArchiveType: 'FELLESKLASSE PRINSIPP',
+                Sort: 1
+              }
+            ],
+            ResponsibleEnterpriseNumber: '45678912',
+            ResponsiblePersonEmail: 'fornavn.etternavn@domene.no',
+            AccessGroup: 'tilgangsgruppe'
+          }
         }
       },
       getCaseParameter: (flowStatus) => {

@@ -43,37 +43,41 @@ module.exports = {
     }
   },
   handleCase: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
         return {
-          CaseType: 'Sak',
-          Project: '20-15',
-          Title: 'En sakstittel',
-          UnofficialTitle: 'En sakstittel med noe snusk i seg som ikke skal vises til media',
-          Status: 'B',
-          JournalUnit: 'Sentralarkiv',
-          SubArchive: 'Sakarkiv',
-          ArchiveCodes: [
-            {
-              ArchiveCode: '035',
-              ArchiveType: 'FELLESKLASSE PRINSIPP',
-              Sort: 1
-            }
-          ],
-          ResponsibleEnterpriseNumber: '821227062',
-          ResponsiblePersonEmail: 'nils.thvedt@vtfk.no',
-          AccessGroup: 'Alle'
+          system: 'acos',
+          template: 'create-test-case',
+          parameter: {}
         }
       },
       getCaseParameter: (flowStatus) => {
         return {
-          CaseNumber: '23/00036' // 
+          CaseNumber: '23/00039' // archive to this case only (case number defined here) (samlesak)
         }
-      },
+      }
     }
   },
-  archive: {
+  archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
+    enabled: false,
+    options: {
+      mapper: (flowStatus, base64, attachments) => {
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier for å opprette elevmappe med fiktivt fødselsnummer
+        return {
+          system: 'acos',
+          template: 'create-test-document',
+          parameter: {
+            ssn: flowStatus.parseXml.result.skjemadata.Fnr,
+            caseNumber: flowStatus.handleCase.result.CaseNumber,
+            base64,
+            attachments
+          }
+        }
+      }
+    }
+  },
+  _archive: {
     enabled: false,
     options: {
       mapper: (flowStatus, base64, attachments) => {
@@ -86,9 +90,9 @@ module.exports = {
             documentDate: '2021-09-27',
             caseNumber: '20/05905',
             studentName: 'Ola Bredesen',
-            responsibleEmail: 'jorgen.thorsnes@vtfk.no',
+            responsibleEmail: '',
             accessGroup: 'Elev Bamble vgs',
-            studentSsn: '16077939907',
+            studentSsn: '',
             base64,
             documentTitle: 'Tittel',
             attachments
@@ -99,6 +103,41 @@ module.exports = {
   },
   signOff: {
     enabled: false
+  },
+  closeCase: {
+    enabled: false
+  },
+  sharepointList: {
+    enabled: true,
+    options:{
+      mapper: (flowStatus) => {
+        return [
+          {
+            siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            siteName: 'BDK-Jrgensteste-team',
+            path: 'sites/BDK-Jrgensteste-team/Lists/Tester%20acos/AllItems.aspx',
+            listId: '038fbc1f-b046-4266-8f58-9adef78c13ad',
+            listName: 'Acos test',
+            uploadFormPdf: true,
+            uploadFormAttachments: true,
+            fields: {
+              Title: flowStatus.parseXml.result.skjemadata?.Status || 'tom streng', // husk å bruke internal name på kolonnen
+              EtValg: 'heihå'
+            }
+          },
+          {
+            siteId: 'f92b32f2-2045-4e18-9e18-a3dda13c3c3c',
+            siteName: 'ADM-Matstestteam',
+            path: 'sites/ADM-Matstestteam/Lists/Acos%20test%202/AllItems.aspx',
+            listId: 'ae04720a-378b-4273-9e82-02e3aed0a539',
+            listName: 'Acos test2',
+            fields: {
+              Status: flowStatus.parseXml.result.skjemadata?.Status || 'tom streng' // husk å bruke internal name på kolonnen
+            }
+          }
+        ]
+      }
+    }
   },
   statistics: {
     enabled: false,

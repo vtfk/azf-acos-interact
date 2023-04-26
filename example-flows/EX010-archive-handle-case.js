@@ -3,10 +3,10 @@ module.exports = {
     enabled: true
   },
   parseXml: {
-    enabled: true,
-    options: {
-    }
+    enabled: true
   },
+
+  // sjekker om det finnes en skoleskyss-sak på arkivkode og tittel. Dersom ikke, oppretter den saken med metadata fra mapper. Saksnummer returneres uansett. 
   handleCase: {
     enabled: true,
     options: {
@@ -35,30 +35,39 @@ module.exports = {
           }
         }
       },
+
       getCaseParameter: (flowStatus) => {
-        return {
-          Title: `Selfangst-${flowStatus.parseXml.archiveData.lastName}` // check for exisiting case with this title
-        }
-      },
-      getCaseParameter2: (flowStatus) => {
-        return {
-          ExternalId: flowStatus.parseXml.archiveData.guid // check for exisiting case with external ID
-        }
-      },
-      getCaseParameter3: (flowStatus) => {
         return {
           ArchiveCode: flowStatus.parseXml.archiveData.fnr, // check for exisiting case with this fnr and case name is Skoleskyss....
           Title: `Skoleskyss-${flowStatus.parseXml.archiveData.firstName} ${flowStatus.parseXml.archiveData.lastName}`
         }
-      },
-      getCaseParameter4: (flowStatus) => {
+      }
+    }
+  },
+
+  // Arkiverer dokumentet i 360 (Her: elevmappa)
+  archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
+    enabled: true,
+    options: {
+      mapper: (flowStatus, base64, attachments) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const caseNumber = flowStatus.handleCase.result.CaseNumber
+        const {nodeEnv, robotEmail} = require('../config')
         return {
-          CaseNumber: '23/12345' // archive to this case only (case number defined here) (samlesak)
-        }
-      },
-      getCaseParameter5: (flowStatus) => {
-        return {
-          CaseNumber: flowStatus.parseXml.archiveData.caseNumber // archive to this case only (case number from Acos XML) (samlesak)
+          system: 'acos',
+          template: 'elevdocument-default',
+          parameter: {
+            organizationNumber: xmlData.AnsVirksomhet,
+            documentDate: new Date().toISOString(),
+            caseNumber,
+            studentName: `${xmlData.Fornavn} ${xmlData.Etternavn}`,
+            responsibleEmail: nodeEnv !== 'dev' ? xmlData.AnsEpost : robotEmail,
+            accessGroup: xmlData.Tilgangsgruppe,
+            studentSsn: xmlData.Fnr,
+            base64,
+            documentTitle: 'Påmelding til nettundervisning',
+            attachments
+          }
         }
       }
     }

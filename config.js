@@ -27,5 +27,6 @@ module.exports = {
     pfxPassphrase: process.env.SP_PFX_PASSPHRASE ?? null,
     pfxThumbprint: process.env.SP_PFX_THUMBPRINT ?? ''
   },
-  nodeEnv: process.env.NODE_ENV ?? 'dev'
+  nodeEnv: process.env.NODE_ENV ?? 'dev',
+  robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com'
 }

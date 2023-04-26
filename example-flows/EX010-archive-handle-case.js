@@ -6,7 +6,7 @@ module.exports = {
     enabled: true
   },
 
-  // sjekker om det finnes en skoleskyss-sak på arkivkode og tittel. Dersom ikke, oppretter den saken med metadata fra mapper. Saksnummer returneres uansett. 
+  // sjekker om det finnes en skoleskyss-sak på arkivkode og tittel. Dersom ikke, oppretter den saken med metadata fra mapper. Saksnummer returneres uansett.
   handleCase: {
     enabled: true,
     options: {
@@ -52,7 +52,7 @@ module.exports = {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const caseNumber = flowStatus.handleCase.result.CaseNumber
-        const {nodeEnv, robotEmail} = require('../config')
+        const { nodeEnv, robotEmail } = require('../config')
         return {
           system: 'acos',
           template: 'elevdocument-default',

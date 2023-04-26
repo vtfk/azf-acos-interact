@@ -7,14 +7,14 @@ module.exports = {
     options: {
     }
   },
-  
+
   // Fyller en eksisterende SP-liste med data fra Acos-skjema. Ett element i lista returnert fra mapper-funksjonen blir en rad i SP-lista, dvs at ett innsendt skjema blir en rad i SP-lista.
   sharepointList: {
     enabled: true,
-    options:{
+    options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example   
+        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
             siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
@@ -48,10 +48,10 @@ module.exports = {
   // Fyller to eksisterende SP-lister med data fra Acos-skjema. Ett element i lista returnert fra mapper-funksjonen blir en rad i hver SP-liste, dvs at ett innsendt skjema blir en rad i hver av SP-listene.
   sharepointList2: {
     enabled: true,
-    options:{
+    options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example   
+        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
             siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
@@ -103,10 +103,10 @@ module.exports = {
   // Fyller en eksisterende SP-liste med data fra Acos-skjema. Hvert element i lista returnert fra mapper-funksjonen blir en rad SP-lista, dvs at ett innsendt skjema blir like mange rader som faglista fra XML er lang i SP-lista.
   sharepointList3: {
     enabled: true,
-    options:{
+    options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const sharepointElements =  []
+        const sharepointElements = []
         const fagliste = Array.isArray(xmlData.ValgteFag.fagliste) ? xmlData.ValgteFag.fagliste : [xmlData.ValgteFag.fagliste] // Sjekker om det er mer enn ett fag i lista (altså et array). Hvis ikke lag et array med det ene elementet
         for (const fag of fagliste) {
           const sharepointElement = {
@@ -146,7 +146,7 @@ module.exports = {
       enOption: true
     }
   },
-  
+
   failOnPurpose: {
     enabled: true
   }

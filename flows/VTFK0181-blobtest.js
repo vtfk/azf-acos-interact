@@ -109,7 +109,7 @@ module.exports = {
   },
   sharepointList: {
     enabled: true,
-    options:{
+    options: {
       mapper: (flowStatus) => {
         return [
           {

@@ -14,7 +14,7 @@ module.exports = {
         return {
           ssn: flowStatus.parseXml.result.ArchiveData.Fnr
         }
-      },
+      }
     }
   },
 
@@ -25,7 +25,7 @@ module.exports = {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
-        const {nodeEnv, robotEmail} = require('../config')
+        const { nodeEnv, robotEmail } = require('../config')
         return {
           system: 'acos',
           template: 'elevdocument-default',

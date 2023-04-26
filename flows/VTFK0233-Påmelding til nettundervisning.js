@@ -1,5 +1,3 @@
-const { nodeEnv } = require("../config")
-
 module.exports = {
   config: {
     enabled: true
@@ -9,7 +7,7 @@ module.exports = {
     options: {
     }
   },
-  
+
   // Synkroniser elevmappe
   syncElevmappe: {
     enabled: true,
@@ -19,7 +17,7 @@ module.exports = {
         return {
           ssn: flowStatus.parseXml.result.ArchiveData.Fnr
         }
-      },
+      }
     }
   },
 
@@ -30,7 +28,7 @@ module.exports = {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
-        const {nodeEnv, robotEmail} = require('../config')
+        const { nodeEnv, robotEmail } = require('../config')
         return {
           system: 'acos',
           template: 'elevdocument-default',
@@ -49,23 +47,23 @@ module.exports = {
         }
       }
     }
-    
+
   },
- 
+
   signOff: {
     enabled: false
   },
-  
+
   closeCase: {
     enabled: false
   },
-  
+
   sharepointList: {
     enabled: true,
-    options:{
+    options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const sharepointElements =  []
+        const sharepointElements = []
         const fagliste = Array.isArray(xmlData.ValgteFag.fagliste) ? xmlData.ValgteFag.fagliste : [xmlData.ValgteFag.fagliste] // Sjekker om det er mer enn ett fag i lista (altså et array). Hvis ikke lag et array med det ene elementet
         for (const fag of fagliste) {
           const sharepointElement = {
@@ -115,14 +113,14 @@ module.exports = {
       }
     }
   },
-  
+
   statistics: {
     enabled: false,
     options: {
       enOption: true
     }
   },
-  
+
   failOnPurpose: {
     enabled: true
   }

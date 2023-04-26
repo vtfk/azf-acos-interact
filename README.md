@@ -12,3 +12,6 @@ VTFK0236-Kartleggingssamtale
 
 ## Scripts
 For å få en oversikt over hvilke flower som er i drift, kjør npm run enabledFlows
+
+## TODO
+Slett filene når alt er OK

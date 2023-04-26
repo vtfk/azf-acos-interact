@@ -20,7 +20,7 @@ module.exports = {
         return {
           ssn: flowStatus.parseXml.result.ArchiveData.Fnr
         }
-      },
+      }
     }
   },
 

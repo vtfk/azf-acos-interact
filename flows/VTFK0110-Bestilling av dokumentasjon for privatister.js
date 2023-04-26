@@ -7,7 +7,7 @@ module.exports = {
     options: {
     }
   },
-  
+
   // Synkroniser elevmappe
   syncElevmappe: {
     enabled: true,
@@ -20,7 +20,7 @@ module.exports = {
         return {
           ssn: flowStatus.parseXml.result.ArchiveData.Fnr
         }
-      },
+      }
     }
   },
 
@@ -52,23 +52,23 @@ module.exports = {
         }
       }
     }
-    
+
   },
- 
+
   signOff: {
     enabled: false
   },
-  
+
   closeCase: {
     enabled: false
   },
-  
+
   sharepointList: {
     enabled: true,
-    options:{
+    options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML')        
+        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML')
         return [
           {
             siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
@@ -99,14 +99,14 @@ module.exports = {
       }
     }
   },
-  
+
   statistics: {
     enabled: false,
     options: {
       enOption: true
     }
   },
-  
+
   failOnPurpose: {
     enabled: true
   }

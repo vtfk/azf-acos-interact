@@ -6,9 +6,14 @@ module.exports = {
     containerName: process.env.STORAGE_ACCOUNT_CONTAINER_NAME || 'navn på container skjema'
   },
   retryIntervalMinutes: retryList,
+  willNotRunAgainFilename: 'will-not-run-again',
   archive: {
     url: process.env.ARCHIVE_URL || 'url to archive endpoint',
     subscriptionKey: process.env.ARCHIVE_SUBSCRIPTION_KEY || 'key to archive endpoint'
+  },
+  statistics: {
+    url: process.env.STATISTICS_URL || 'url to statistics endpoint',
+    subscriptionKey: process.env.STATISTICS_SUBSCRIPTION_KEY || 'key to statistics endpoint'
   },
   autoConvertFileFormats: ((process.env.AUTO_CONVERT_FILE_FORMATS && process.env.AUTO_CONVERT_FILE_FORMATS.split(',')) || ['JPG', 'JPEG', 'XLSX', 'XLS', 'RTF', 'MSG', 'PPT', 'PPTX', 'DOCX', 'DOC', 'PNG']).map(ext => ext.toLowerCase()),
   graphClient: {
@@ -28,5 +33,6 @@ module.exports = {
     pfxThumbprint: process.env.SP_PFX_THUMBPRINT ?? ''
   },
   nodeEnv: process.env.NODE_ENV ?? 'dev',
-  robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com'
+  robotEmail: process.env.ROBOT_EMAIL ?? 'robot@robot.com',
+  roomServiceTeamsWebhook: process.env.ROOMSERVICE_TEAMS_WEBHOOK_URL ?? 'teams.com'
 }

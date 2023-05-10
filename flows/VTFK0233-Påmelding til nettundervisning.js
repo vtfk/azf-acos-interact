@@ -1,6 +1,9 @@
+const description = 'Arkivering av testdokument og opprettelse av et listeelement i SP.'
+
 module.exports = {
   config: {
-    enabled: true
+    enabled: true,
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true,
@@ -120,8 +123,26 @@ module.exports = {
       enOption: true
     }
   },
-
+  statistics: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
+        return {
+          company: 'OF',
+          department: 'Nettskolen',
+          description, // Required. A description of what the statistic element represents
+          type: 'Nettskolen påmelding nettundervisning', // Required. A short searchable type-name that distinguishes the statistic element
+          // optional fields:
+          documentNumber: flowStatus.archive.result.DocumentNumber, // Optional. anything you like
+          Fylke: xmlData.Fylke,
+          Skole: xmlData.Skole
+        }
+      }
+    }
+  },
   failOnPurpose: {
-    enabled: true
+    enabled: false
   }
 }

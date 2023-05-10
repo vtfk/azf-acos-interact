@@ -1,6 +1,8 @@
+const description = 'Bestilling av dokumentasjon for privatister. Sender til elevmappe, oppretter rad i SharePoint liste for seksjonen'
 module.exports = {
   config: {
-    enabled: true
+    enabled: true,
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true,
@@ -101,13 +103,29 @@ module.exports = {
   },
 
   statistics: {
-    enabled: false,
+    enabled: true,
     options: {
-      enOption: true
+      mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
+        return {
+          company: 'OF',
+          department: 'EKSAMEN',
+          description,
+          type: 'Bestilling av privatistdokumentasjon', // Required. A short searchable type-name that distinguishes the statistic element
+          // optional fields:
+          tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
+          documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false', // Optional. anything you like
+          Typedokumentasjon: xmlData.TypeDok,
+          Typeautorasisjon: xmlData.TypeAut,
+          Eksamenssted: xmlData.Eksamenssted,
+          Fag: xmlData.Fag
+        }
+      }
     }
   },
 
   failOnPurpose: {
-    enabled: true
+    enabled: false
   }
 }

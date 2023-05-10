@@ -1,7 +1,7 @@
-const dispatcher = require('../lib/dispatcher')
-const { logConfig } = require('@vtfk/logger')
+const { dispatcher } = require('../lib/dispatcher')
+const { logConfig, logger } = require('@vtfk/logger')
 
-module.exports = async function (context, req) {
+module.exports = async function (context, myTimer) {
   logConfig({
     prefix: 'azf-acos-interact - Dispatcher',
     azure: {
@@ -10,10 +10,8 @@ module.exports = async function (context, req) {
     }
   })
   try {
-    const result = await dispatcher()
-    return { status: 200, body: result }
+    await dispatcher()
   } catch (error) {
-    console.log(error)
-    return { status: 500, body: error }
+    logger('error', ['timertrigger failed', error.stack || error.toString()])
   }
 }

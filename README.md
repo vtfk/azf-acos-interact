@@ -12,6 +12,8 @@ VTFK0236-Kartleggingssamtale
 
 ## Scripts
 For å få en oversikt over hvilke flower som er i drift, kjør npm run enabledFlows
+## finishFlow
+finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke definerer noe annet i options
 
 ## TODO
 Slett filene når alt er OK

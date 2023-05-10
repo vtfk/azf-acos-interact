@@ -1,6 +1,7 @@
 module.exports = {
   config: {
-    enabled: true
+    enabled: true,
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true,
@@ -43,7 +44,7 @@ module.exports = {
     }
   },
   handleCase: {
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         return {
@@ -60,7 +61,7 @@ module.exports = {
     }
   },
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
-    enabled: false,
+    enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier for å opprette elevmappe med fiktivt fødselsnummer
@@ -124,28 +125,28 @@ module.exports = {
               Title: flowStatus.parseXml.result.skjemadata?.Status || 'tom streng', // husk å bruke internal name på kolonnen
               EtValg: 'heihå'
             }
-          },
-          {
-            siteId: 'f92b32f2-2045-4e18-9e18-a3dda13c3c3c',
-            siteName: 'ADM-Matstestteam',
-            path: 'sites/ADM-Matstestteam/Lists/Acos%20test%202/AllItems.aspx',
-            listId: 'ae04720a-378b-4273-9e82-02e3aed0a539',
-            listName: 'Acos test2',
-            fields: {
-              Status: flowStatus.parseXml.result.skjemadata?.Status || 'tom streng' // husk å bruke internal name på kolonnen
-            }
           }
         ]
       }
     }
   },
   statistics: {
-    enabled: false,
+    enabled: true,
     options: {
-      enOption: true
+      mapper: (flowStatus) => {
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
+        return {
+          company: 'BDK',
+          department: 'TEK',
+          description: 'Arkivering av testdokument og opprettelse av et listeelement i SP.', // Required. A description of what the statistic element represents
+          type: 'TEK - Blobtest', // Required. A short searchable type-name that distinguishes the statistic element
+          // optional fields:
+          documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
+        }
+      }
     }
   },
   failOnPurpose: {
-    enabled: true
+    enabled: false
   }
 }

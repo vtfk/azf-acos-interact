@@ -1,18 +1,10 @@
 {
   "bindings": [
     {
-      "authLevel": "function",
-      "type": "httpTrigger",
+      "name": "acosDispatcher",
+      "type": "timerTrigger",
       "direction": "in",
-      "name": "req",
-      "methods": [
-        "get"
-      ]
-    },
-    {
-      "type": "http",
-      "direction": "out",
-      "name": "$return"
+      "schedule": "0 */5 * * * *"
     }
   ]
 }

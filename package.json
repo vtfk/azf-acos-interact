@@ -1,14 +1,14 @@
 {
-  "name": "",
+  "name": "azf-acos-interact",
   "version": "1.0.0",
-  "description": "",
+  "description": "Handles forms from Acos",
   "scripts": {
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
     "@azure/msal-node": "^1.17.0",
-    "@vtfk/azure-blob-client": "^0.1.3",
+    "@vtfk/azure-blob-client": "^0.1.5",
     "@vtfk/logger": "^4.3.2",
     "@vtfk/sharepoint-rest-auth": "^1.0.1",
     "axios": "^1.3.4",

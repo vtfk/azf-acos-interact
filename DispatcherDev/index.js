@@ -1,5 +1,5 @@
 const { dispatcher } = require('../lib/dispatcher')
-const { logConfig, logger } = require('@vtfk/logger')
+const { logConfig } = require('@vtfk/logger')
 
 module.exports = async function (context, req) {
   logConfig({

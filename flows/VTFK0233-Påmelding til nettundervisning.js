@@ -116,13 +116,6 @@ module.exports = {
       }
     }
   },
-
-  statistics: {
-    enabled: false,
-    options: {
-      enOption: true
-    }
-  },
   statistics: {
     enabled: true,
     options: {

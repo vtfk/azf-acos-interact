@@ -7,6 +7,9 @@ module.exports = async function (context, myTimer) {
     azure: {
       context,
       excludeInvocationId: true
+    },
+    teams: {
+      onlyInProd: false
     }
   })
   try {

@@ -32,7 +32,7 @@ finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke definer
 - Set up the Azure Function configuration coresponding to you local.settings.json
   - First set up the certificate in the configuration
     - Get the reference to the certificate from Key Vault (copy the Secret identifier from the certificate) [use Key Vault references](https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references?tabs=azure-cli)
-    - create a configuration key called SP_PFX_BASE64 and paste in the Secret identifier as the value (@Microsoft.KeyVault(SecretUri={Secret Identifier you have copied}))
+    - create a application setting called SP_PFX_BASE64 and paste in the value (@Microsoft.KeyVault(SecretUri={Secret Identifier you have copied}))
         - if you always want the Azure function to fetch the latest version of the certificate / secret, remove the id from the Secret Identifier uri. Example: https://myvault.vault.azure.net/secrets/mysecret/
     - save the configuration ans check that the connection to Key Vault is valid (save, refresh page and see connection status inside the key)
   - then the rest:

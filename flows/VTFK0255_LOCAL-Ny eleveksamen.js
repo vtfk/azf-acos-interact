@@ -1,8 +1,8 @@
-const description = 'Søknad om annullering av eksamen etter UDIRs eksamensfadese 2023, oppretter rad i SharePoint liste for seksjonen'
+const description = 'Påmelding til ny privatisteksamen etter UDIRs eksamensfadese 2023, oppretter rad i SharePoint liste for seksjonen'
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true,
@@ -18,16 +18,16 @@ module.exports = {
         if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML')
         return [
           {
-            testSiteId: '8814d65c-b4bd-4859-998f-63ba9b3f1f10',
-            testSiteName: 'OF-OF-Eksamensansvarlige',
-            testPath: 'sites/OF-OF-Eksamensansvarlige/Lists/TEST%20%20Annullering%20eleveksamen/AllItems.aspx',
-            testListId: '1c5fd914-4006-4536-953a-6ebbdf806d44',
-            testListName: 'TEST - Annullering eleveksamen',
-            prodSiteId: '8814d65c-b4bd-4859-998f-63ba9b3f1f10',
-            prodSiteName: 'OF-OF-Eksamensansvarlige',
-            prodPath: 'sites/OF-OF-Eksamensansvarlige/Lists/Annullering%20eleveksamen/AllItems.aspx',
-            prodListId: '48658c48-d623-4c1f-bae7-35e01a24e933',
-            prodListName: 'Annullering eleveksamen',
+            testSiteId: 'c68676a9-b44a-4c27-ad28-5fd5c7dc18ac',
+            testSiteName: 'OF-Seksjonforinntakeksamenogvoksenopplring', // Husk å bruk sitename fra URL (legg dette i readme)
+            testPath: 'sites/OF-Seksjonforinntakeksamenogvoksenopplring/Lists/Nyprivatisteksamen%20%20TEST/AllItems.aspx',
+            testListId: '7caa8101-f96d-4bbd-9eca-8526a22fdd2a',
+            testListName: 'Nyprivatisteksamen - TEST',
+            prodSiteId: 'c68676a9-b44a-4c27-ad28-5fd5c7dc18ac',
+            prodSiteName: 'OF-Seksjonforinntakeksamenogvoksenopplring',
+            prodPath: 'sites/OF-Seksjonforinntakeksamenogvoksenopplring/Lists/Nyprivatisteksamen/AllItems.aspx',
+            prodListId: 'e1e94c1d-cbef-49af-99d9-65206cf58eaf',
+            prodListName: 'Nyprivatisteksamen',
             uploadFormPdf: true,
             uploadFormAttachments: false,
             fields: {
@@ -36,12 +36,10 @@ module.exports = {
               Etternavn: xmlData.Etternavn,
               Adresse: xmlData.Adresse,
               Postnummer: xmlData.Postnr,
-              Sted: xmlData.Poststed,
-              Mobilnummer: xmlData.Mobilnr,
+              Poststed: xmlData.Poststed,
+              Mobil: xmlData.Mobilnr,
               E_x002d_post: xmlData.Epost,
-              Klasse: xmlData.Klasse,
-              Skole: xmlData.Skole,
-              Eksamenskode: xmlData.Fagkode
+              Fag: xmlData.Fag
             }
           }
         ]
@@ -59,11 +57,9 @@ module.exports = {
           company: 'OF',
           department: 'EKSAMEN',
           description,
-          type: 'Annullering av eksamen', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Ny privatisteksamen-UDIR fadese', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
-          Klasse: xmlData.Klasse,
-          Skole: xmlData.Skole,
-          Fagkode: xmlData.Fagkode
+          Fag: xmlData.Fag
         }
       }
     }

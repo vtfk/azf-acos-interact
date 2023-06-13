@@ -71,7 +71,6 @@ module.exports = {
         for (const fag of fagliste) {
           const sharepointElement = {
             siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
-            siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
             listId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
             uploadFormPdf: true,

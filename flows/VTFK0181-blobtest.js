@@ -118,7 +118,6 @@ module.exports = {
             siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/Tester%20acos/AllItems.aspx',
             listId: '038fbc1f-b046-4266-8f58-9adef78c13ad',
-            listName: 'Acos test',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

@@ -18,10 +18,8 @@ module.exports = {
         return [
           {
             siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
-            siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
             listId: 'D1085908-9111-4b6d-84d3-fc8ecd29d398',
-            listName: 'Acos test',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
@@ -58,7 +56,6 @@ module.exports = {
             siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
             listId: 'D1085908-9111-4b6d-84d3-fc8ecd29d398',
-            listName: 'Acos test',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
@@ -83,7 +80,6 @@ module.exports = {
             siteName: 'BDK-Jrgensteste-team2',
             path: 'sites/BDK-Jrgensteste-team2/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
             listId: 'en annen listId',
-            listName: 'Acos test2',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
@@ -114,7 +110,6 @@ module.exports = {
             siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
             listId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
-            listName: 'Test - Påmelding nettundervisning vgs',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

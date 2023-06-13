@@ -74,7 +74,6 @@ module.exports = {
             siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
             listId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
-            listName: 'Test - Påmelding nettundervisning vgs',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

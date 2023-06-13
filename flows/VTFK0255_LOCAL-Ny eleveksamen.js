@@ -19,15 +19,11 @@ module.exports = {
         return [
           {
             testSiteId: 'c68676a9-b44a-4c27-ad28-5fd5c7dc18ac',
-            testSiteName: 'OF-Seksjonforinntakeksamenogvoksenopplring', // Husk å bruk sitename fra URL (legg dette i readme)
             testPath: 'sites/OF-Seksjonforinntakeksamenogvoksenopplring/Lists/Nyprivatisteksamen%20%20TEST/AllItems.aspx',
             testListId: '7caa8101-f96d-4bbd-9eca-8526a22fdd2a',
-            testListName: 'Nyprivatisteksamen - TEST',
             prodSiteId: 'c68676a9-b44a-4c27-ad28-5fd5c7dc18ac',
-            prodSiteName: 'OF-Seksjonforinntakeksamenogvoksenopplring',
             prodPath: 'sites/OF-Seksjonforinntakeksamenogvoksenopplring/Lists/Nyprivatisteksamen/AllItems.aspx',
             prodListId: 'e1e94c1d-cbef-49af-99d9-65206cf58eaf',
-            prodListName: 'Nyprivatisteksamen',
             uploadFormPdf: true,
             uploadFormAttachments: false,
             fields: {

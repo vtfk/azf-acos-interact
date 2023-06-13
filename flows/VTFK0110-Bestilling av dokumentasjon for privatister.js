@@ -74,10 +74,8 @@ module.exports = {
         return [
           {
             siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
-            siteName: 'BDK-Jrgensteste-team',
             path: 'sites/BDK-Jrgensteste-team/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
             listId: 'D1085908-9111-4b6d-84d3-fc8ecd29d398',
-            listName: 'Acos test',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

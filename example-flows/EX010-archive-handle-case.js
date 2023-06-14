@@ -61,7 +61,7 @@ module.exports = {
             documentDate: new Date().toISOString(),
             caseNumber,
             studentName: `${xmlData.Fornavn} ${xmlData.Etternavn}`,
-            responsibleEmail: nodeEnv !== 'dev' ? xmlData.AnsEpost : robotEmail,
+            responsibleEmail: nodeEnv === 'production' ? xmlData.AnsEpost : robotEmail,
             accessGroup: xmlData.Tilgangsgruppe,
             studentSsn: xmlData.Fnr,
             base64,

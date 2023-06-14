@@ -1,7 +1,7 @@
 const description = 'Bestilling av dokumentasjon for privatister. Sender til elevmappe, oppretter rad i SharePoint liste for seksjonen'
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: true
   },
   parseXml: {
@@ -93,6 +93,7 @@ module.exports = {
               _x00d8_nsketmottak: xmlData.OnsketMottak,
               Eksamensperiode: xmlData.AarSemester,
               Alternativadresse: xmlData.AltAdresse
+
             }
           }
         ]

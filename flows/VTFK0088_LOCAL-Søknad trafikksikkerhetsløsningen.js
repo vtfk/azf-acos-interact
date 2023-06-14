@@ -29,14 +29,14 @@ const vestfoldKommuner = [
   'TØNSBERG KOMMUNE'
 ]
 
-const getCountyProject = (kommune) => {
-  let projectNumber
+const getCountyAndProject = (kommune) => {
+  let result
   const telemarkProjectNumber = nodeEnv === 'production' ? '23-667' : '23-11'
   const vestfoldProjectNumber = nodeEnv === 'production' ? '23-666' : '23-10'
-  if (telemarkKommuner.includes(kommune)) projectNumber = telemarkProjectNumber
-  if (vestfoldKommuner.includes(kommune)) projectNumber = vestfoldProjectNumber
-  if (!projectNumber) throw new Error(`${kommune} is not a valid kommune`)
-  return projectNumber
+  if (telemarkKommuner.includes(kommune)) result = { projectNumber: telemarkProjectNumber, county: 'Telemark' }
+  if (vestfoldKommuner.includes(kommune)) result = { projectNumber: vestfoldProjectNumber, county: 'Vestfold' }
+  if (!result) throw new Error(`${kommune} is not a valid kommune`)
+  return result
 }
 
 module.exports = {
@@ -106,7 +106,7 @@ string PrioriteringHjertesone
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: getCountyProject(xmlData.Kommune),
+            Project: getCountyAndProject(xmlData.Kommune).projectNumber,
             Title: `Søknad om midler til trafikksikkerhetsordningen 2024 - ${xmlData.Kommune}`,
             Status: 'B',
             JournalUnit: 'Sentralarkiv',
@@ -133,7 +133,7 @@ string PrioriteringHjertesone
         const xmlData = flowStatus.parseXml.result.Soknad
         return {
           Title: `Søknad om midler til trafikksikkerhetsordningen 2024 - ${xmlData.Kommune}`,
-          Project: getCountyProject(xmlData.Kommune)
+          Project: getCountyAndProject(xmlData.Kommune).projectNumber
         }
       }
     }
@@ -155,9 +155,9 @@ string PrioriteringHjertesone
           template: 'ts-ordningen-create-document',
           parameter: {
             orgnr: xmlData.Avsender,
-            documentDate: '2023-06-13', // new Date().toISOString(),
+            documentDate: new Date().toISOString(),
             caseNumber,
-            responsiblePersonEmail: nodeEnv !== 'dev' ? xmlData.AnsvarligEpost : robotEmail,
+            responsiblePersonEmail: nodeEnv === 'production' ? xmlData.AnsvarligEpost : robotEmail,
             base64,
             title: `Søknad om midler til trafikksikkerhetsordningen 2024 - ${title}`,
             attachments
@@ -222,7 +222,8 @@ string PrioriteringHjertesone
               Forventetferdigstillelse: xmlData.ForventetFerdigstillelse,
               Prioriteringbarnogunge: xmlData.PrioriteringBarnOgUnge,
               PrioriteringUU: xmlData.PrioriteringUU,
-              Prioriteringhjertesone: xmlData.PrioriteringHjertesone
+              Prioriteringhjertesone: xmlData.PrioriteringHjertesone,
+              Fylke: getCountyAndProject(xmlData.Kommune).county
             }
           }
         ]
@@ -243,6 +244,7 @@ string PrioriteringHjertesone
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber, // Optional. anything you like
           Kommune: xmlData.Kommune,
+          Fylke: getCountyAndProject(xmlData.Kommune).county,
           Prosjektnavn: xmlData.Prosjektnavn
         }
       }

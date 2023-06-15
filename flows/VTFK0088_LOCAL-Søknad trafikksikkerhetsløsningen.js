@@ -251,6 +251,6 @@ string PrioriteringHjertesone
     }
   },
   failOnPurpose: {
-    enabled: true
+    enabled: false
   }
 }

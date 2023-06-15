@@ -44,7 +44,7 @@ string InnsenderFnr
           parameter: {
             CaseType: 'Sak',
             Title: 'Elevsak',
-            UnofficialTitle: `Elevsak - ${xmlData.SkoleNavn} - ${xmlData.Elevnavn}`,
+            UnofficialTitle: `Elevsak - ${xmlData.SkoleNavn} - ${xmlData.ElevNavn}`,
             Status: 'B',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
@@ -65,7 +65,8 @@ string InnsenderFnr
               {
                 ArchiveCode: xmlData.ElevFnr,
                 ArchiveType: 'FNR',
-                Sort: 3
+                Sort: 3,
+                IsManualText: true
               }
             ],
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '235285' : '236911'
@@ -84,6 +85,7 @@ string InnsenderFnr
         return {
           system: 'acos',
           template: 'mobbeombud-document',
+          secure: true,
           parameter: {
             enterpriseRecno: nodeEnv === 'production' ? '235285' : '236911',
             documentDate: new Date().toISOString(),

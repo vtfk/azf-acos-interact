@@ -1,17 +1,122 @@
 # azf-acos-interact
 Azure functions for handling Acos files
 
-## Navnestandard for nye flows:
-{AcosskjemaID}-{skjemanavn}
-VTFK0236-Kartleggingssamtale
+## Definisjoner
+### flow
+Dette er beskrivelse av hvordan et avlevert skjema skal håndteres. Flow'en beskriver hvilke jobber som skal kjøres. I tillegg inneholder den konfigurasjoner for skjema.
+Alle flower skal inneholde et config-objekt der man kan skru av og på flowen. Eks: 
+```js
+{
+  config: {
+    enabled: true
+  }
+}
+```
+Enabled vil styre om flyten skal kjøres eller ikke.
+### job
+En job er en definisjon og konfigurasjon av en oppgave som skal utføres på det avleverte skjemaet. En flow kan inneholde mange jobber. [Se hvilke jobber man kan bruke her](#jobber-som-kan-brukes). En typisk jobb er satt opp på dette formatet: 
+```js
+{
+  jobName: {
+    enabled: true,
+    options: {
+      opt1: 'data',
+      opt2: (flowStatus) => { console.log('ett eller annet') }
+    }
+  }
+}
+```
+### flowStatus.json
+Dette er en json-fil som opprettes automatisk og inneholder status over hva som er kjørt og hva som gjenstår, og metadata om skjema og jobbene. 
+En typisk flowStatus.json:
+```json
+{
+  "createdTimeStamp": "2023-06-20T10:45:36.958Z",
+  "finished": false,
+  "failed": true,
+  "refId": "1285709",
+  "acosId": "skjemaId",
+  "acosName": "",
+  "blobDir": "skjemaid/refid",
+  "runs": 2,
+  "nextRun": "2023-06-20T10:47:54.105Z",
+  "job1": {
+    "jobFinished": true,
+    "result": {
+      "somedata": {
+        "nesteddatafromthejob": 254
+      }
+    }
+  },
+  "job2": {
+    "jobFinished": false,
+    "error": "something went wrong"
+  }
+}
+```
+Man kan manipulere nextRun (sett tidligere dato) og runs (sett lavere siffer).
 
 ## Sette opp ny skjemaavlevering:
 1. Opprett en ny js-flowfil i ./flows på formen `{AcosId}-{Navn på skjema}.js` Det enkleste er å kopiere fra et lignende skjema som er i drift og gi dette et nytt navn.
 2. Sette opp jobbene som skal kjøres i filen som ble laget i pkt. 1. Eksempel på ulike jobber finner du i mappen ./example-flows
 3. Test lokalt. Rett feil og sett i prod (commit -> push -> jrelease *patch || minor || major*)
 
-## finishFlow
-finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke definerer noe annet i options
+
+## Jobber som kan brukes
+Jobbene er listet opp i rekkefølgen de vil bli kjørt
+### parseXml
+Denne jobben gjør om XML fra Acos-avleveringen til JSON. Jobben leser også websak_hode-fila fra Acos og henter ut vedleggsmetadata. Denne jobben må være med.
+
+### syncElevmappe
+Denne jobben får inn fødselsnummer eller annen persondata (kan også generere opp fiktive fødselsnummer), oppretter eller oppdaterer elevmappe for elev. Returnerer persondata og saksnummer. [Se eksempler her](./example-flows/EX001-elevmappe.js)
+
+### syncPrivatePerson
+Denne jobben får inn fødselsnummer eller annen persondata (kan også generere opp fiktive fødselsnummer), oppretter eller oppdaterer privatperson i arkiv. Returnerer persondata og recno. [Se eksempler her](./example-flows/EX003-sync-private-person.js)
+
+### syncEmployee
+Denne jobben får inn fødselsnummer og UPN, oppretter eller oppdaterer personalprosjekt i arkiv. Returnerer persondata, tilgangsgrupper og prosjektnummer. [Se eksempler her](./example-flows/EX004-sync-employee.js)
+
+### handleCase
+Denne jobben får inn metadata for en sak, og eventuelt en getCase-parameter for å se om en sak finnes allerede før den oppretter. Returnerer saksnummer. 
+[Se eksempler her](./example-flows/EX005-handle-case.js)
+### archive
+Denne jobben får inn metadata for dokument eller en template-henvisning til azf-archive, Returnerer dokumentnummer. 
+[Se eksempler her](./example-flows/EX010-archive-handle-case.js)
+
+### signOff
+Denne jobben krever at archive er kjørt først. Den henter dokumentnummer fra denne jobben og avskriver dokumentet med koden TO (Tatt til orientering). [Se eksempler her](./example-flows/EX006-sign-off-and-close-case.js)
+### closeCase
+Denne jobben krever at handleCase er kjørt først. Den henter saksnummer fra denne jobben og lukker saken. [Se eksempler her](./example-flows/EX006-sign-off-and-close-case.js)
+
+### sharepointList
+Denne jobben oppretter listeelementer i gitte lister i SharePoint. [Se eksempler her](./example-flows/EX008-sharepoint-list.js)
+
+### statistics
+Denne jobben genererer statistikkelementer i statistikkdatabasen. [Se eksempler her](./example-flows/EX011-statistics.js)
+
+### failOnPurpose
+Denne jobben fører til at flyten stopper. Settes til enabled om du ønsker at flyten stopper før finishFlow kjøres (til testing).
+
+### finishFlow
+finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke setter `doNotDeleteBlobs: true` i flowConfig'en. Eks: 
+```js
+{
+  config: {
+    doNotDeleteBlobs: true
+  }
+}
+```
+## Retry håndtering
+Styres av miljøvariabelen retryIntervalMinutes. Legges inn på formatet '{antall minutter for første retry}, {osv}'
+
+Eks: '5,60,240' (første retry etter 5 minutter, deretter 60 minutter, og til slutt 240 minutter. Totalt blir det fire kjøringer (inkludert den første)). Flere kan legges til hvis ønskelig.
+
+## roomService
+roomService er en egen timertrigger som kjører tre ganger om dagen. Den sjekker:
+- innsendte skjema som mangler flow-fil (Denne vil komme dersom det er satt opp en avlevering fra Acos uten at det er laget noen flow-fil. Løses ved å opprette en flow-fil)
+- blober med problemer (Dette er blober i blobstorage som ikke har en gyldig plassering (blobene mangler kanskje refId eller AcosId?). Sjekk avlevering og evt. blobstorage)
+- blober som har blitt forsøkt maks antall ganger (retryIntervalMinutes.length() er forsøkt.)
+- skjema som ligger i containeren i dette øyeblikk. (Dette er skjemaer som enten venter i kø eller er satt til å ikke bli slettet (doNotDeleteBlobs = true i flowDef-fila))
 
 ## Deploy to Azure
 - Create Azure Function on an App Service Plan

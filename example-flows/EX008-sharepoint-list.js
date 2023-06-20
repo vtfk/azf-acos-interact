@@ -17,9 +17,12 @@ module.exports = {
         if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
-            path: 'sites/BDK-Jrgensteste-team/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
-            listId: 'D1085908-9111-4b6d-84d3-fc8ecd29d398',
+            testSiteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            testPath: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
+            testListId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
+            prodSiteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            prodPath: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
+            prodListId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
@@ -52,10 +55,12 @@ module.exports = {
         if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
-            siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
-            siteName: 'BDK-Jrgensteste-team',
-            path: 'sites/BDK-Jrgensteste-team/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
-            listId: 'D1085908-9111-4b6d-84d3-fc8ecd29d398',
+            testSiteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            testPath: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
+            testListId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
+            prodSiteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            prodPath: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
+            prodListId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
@@ -106,10 +111,12 @@ module.exports = {
         const fagliste = Array.isArray(xmlData.ValgteFag.fagliste) ? xmlData.ValgteFag.fagliste : [xmlData.ValgteFag.fagliste] // Sjekker om det er mer enn ett fag i lista (altså et array). Hvis ikke lag et array med det ene elementet
         for (const fag of fagliste) {
           const sharepointElement = {
-            siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
-            siteName: 'BDK-Jrgensteste-team',
-            path: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
-            listId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
+            testSiteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            testPath: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
+            testListId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
+            prodSiteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            prodPath: 'sites/BDK-Jrgensteste-team/Lists/Test%20%20Pmelding%20nettundervisning%20vgs/AllItems.aspx',
+            prodListId: '76d4a6be-73f1-4c6a-baeb-feadb2b2decc',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

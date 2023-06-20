@@ -63,10 +63,23 @@ string InnsenderFnr
                 Sort: 2
               },
               {
-                ArchiveCode: xmlData.ElevFnr,
-                ArchiveType: 'FNR',
+                ArchiveCode: '--',
+                ArchiveType: 'TILLEGGSKODE PRINSIPP',
                 Sort: 3,
                 IsManualText: true
+              },
+              {
+                ArchiveCode: xmlData.ElevFnr,
+                ArchiveType: 'FNR',
+                IsManualText: true,
+                Sort: 4
+              }
+            ],
+            Contacts: [
+              {
+                Role: 'Sakspart',
+                ReferenceNumber: xmlData.InnsenderFnr,
+                IsUnofficial: true
               }
             ],
             ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '235285' : '236911'

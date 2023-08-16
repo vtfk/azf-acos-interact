@@ -98,11 +98,11 @@ Denne jobben genererer statistikkelementer i statistikkdatabasen. [Se eksempler 
 Denne jobben fører til at flyten stopper. Settes til enabled om du ønsker at flyten stopper før finishFlow kjøres (til testing).
 
 ### finishFlow
-finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke setter `doNotDeleteBlobs: true` i flowConfig'en. Eks: 
+finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke setter `doNotRemoveBlobs: true` i flowConfig'en. Eks: 
 ```js
 {
   config: {
-    doNotDeleteBlobs: true
+    doNotRemoveBlobs: true
   }
 }
 ```
@@ -116,7 +116,7 @@ roomService er en egen timertrigger som kjører tre ganger om dagen. Den sjekker
 - innsendte skjema som mangler flow-fil (Denne vil komme dersom det er satt opp en avlevering fra Acos uten at det er laget noen flow-fil. Løses ved å opprette en flow-fil)
 - blober med problemer (Dette er blober i blobstorage som ikke har en gyldig plassering (blobene mangler kanskje refId eller AcosId?). Sjekk avlevering og evt. blobstorage)
 - blober som har blitt forsøkt maks antall ganger (retryIntervalMinutes.length() er forsøkt.)
-- skjema som ligger i containeren i dette øyeblikk. (Dette er skjemaer som enten venter i kø eller er satt til å ikke bli slettet (doNotDeleteBlobs = true i flowDef-fila))
+- skjema som ligger i containeren i dette øyeblikk. (Dette er skjemaer som enten venter i kø eller er satt til å ikke bli slettet (doNotRemoveBlobs = true i flowDef-fila))
 
 ## Deploy to Azure
 - Create Azure Function on an App Service Plan

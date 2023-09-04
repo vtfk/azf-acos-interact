@@ -147,7 +147,6 @@ string InnsenderFnr
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'HRMU',

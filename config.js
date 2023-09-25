@@ -5,6 +5,10 @@ module.exports = {
     connectionString: process.env.STORAGE_ACCOUNT_CONNECTION_STRING || 'En connection string',
     containerName: process.env.STORAGE_ACCOUNT_CONTAINER_NAME || 'navn på container skjema'
   },
+  groundControlStorageAccount: {
+    connectionString: process.env.GROUND_CONTROL_STORAGE_ACCOUNT_CONNECTION_STRING || 'En connection string',
+    containerName: process.env.GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME || 'navn på container skjema'
+  },
   retryIntervalMinutes: retryList,
   willNotRunAgainFilename: 'will-not-run-again',
   archive: {

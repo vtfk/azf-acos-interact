@@ -94,6 +94,9 @@ Denne jobben oppretter listeelementer i gitte lister i SharePoint. [Se eksempler
 ### statistics
 Denne jobben genererer statistikkelementer i statistikkdatabasen. [Se eksempler her](./example-flows/EX011-statistics.js)
 
+### groundControl
+Denne jobben kopierer blob-filene (pdf, vedlegg, xml, og flowstatus) over til GROUND_CONTROL_STORAGE_ACCOUNT_CONNECTION_STRING GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, der filene igjen blir plukket ned til server on-prem. Dersom du trenger lokal avlevering (til lokal server on-prem), setter du groundControl til enabled. Jobben som henter ned filer til lokalt finner du i [./ground-control](./ground-control/index.js), og du kan lese mer om den i egen [readme](./ground-control/readme.md)
+
 ### failOnPurpose
 Denne jobben fører til at flyten stopper. Settes til enabled om du ønsker at flyten stopper før finishFlow kjøres (til testing).
 

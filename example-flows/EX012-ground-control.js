@@ -1,4 +1,4 @@
-const description = 'Eksempel på lokal avlevering av filer'
+// Eksempel på lokal avlevering av filer
 module.exports = {
   config: {
     enabled: true,

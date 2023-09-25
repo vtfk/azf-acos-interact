@@ -21,7 +21,7 @@
   }
 
   // Get all blobs in storage account
-  logger('info', `Fetching blobs ready for server download`)
+  logger('info', 'Fetching blobs ready for server download')
   const blobs = await list('*', blobOptions)
   logger('info', `Got ${blobs.length} ready blobs from storage account`)
 
@@ -68,5 +68,4 @@
     }
   }
   logger('info', 'Finished downloading all refids and blobs to ground control')
-
 })()

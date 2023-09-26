@@ -1,0 +1,95 @@
+<mxfile host="app.diagrams.net" modified="2023-09-26T10:42:37.090Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.41" etag="dHO-jgoeElgt0HVc5tk2" version="21.7.2" type="device">
+  <diagram name="Page-1" id="OenxXWQxkFeTiB5he88d">
+    <mxGraphModel dx="1215" dy="688" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IRzBCizce1bIe2d0EAGk-1" value="AZF-acos-interact" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/compute/Function_Apps.svg;" vertex="1" parent="1">
+          <mxGeometry x="330" y="120" width="68" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-2" value="container avleveringprod" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/BlobBlock.svg;" vertex="1" parent="1">
+          <mxGeometry x="90" y="220" width="50" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.487;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-3" target="IRzBCizce1bIe2d0EAGk-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-5" value="Avleverer skjema" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IRzBCizce1bIe2d0EAGk-4">
+          <mxGeometry x="-0.1746" y="3" relative="1" as="geometry">
+            <mxPoint x="-9" y="22" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-3" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://inspirasjon.acos.no/hubfs/ACOS%20bl%C3%A5%20logo_.png;" vertex="1" parent="1">
+          <mxGeometry x="70" y="70" width="102" height="38.99" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.047;entryY=0.452;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-6" target="IRzBCizce1bIe2d0EAGk-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.019;entryY=0.536;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-6" target="IRzBCizce1bIe2d0EAGk-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-12" value="Bruker skjemaflyt definert for skjema" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IRzBCizce1bIe2d0EAGk-11">
+          <mxGeometry x="0.2955" y="6" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-6" value="Timer trigger&lt;br&gt;Håndterer innsendte skjema" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/general/Scheduler.svg;" vertex="1" parent="1">
+          <mxGeometry x="350" y="210" width="28" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-8" target="IRzBCizce1bIe2d0EAGk-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-8" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/azure_stack/Plans.svg;" vertex="1" parent="1">
+          <mxGeometry x="660" y="120" width="52" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-15" target="IRzBCizce1bIe2d0EAGk-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-19" value="Hvis ja - blobbene kopieres over til ny container" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IRzBCizce1bIe2d0EAGk-18">
+          <mxGeometry x="0.0854" y="4" relative="1" as="geometry">
+            <mxPoint x="24" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-15" value="Er jobben groundControl skrudd på?" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="310" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-20" value="container lokalavleveringprod" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/BlobBlock.svg;" vertex="1" parent="1">
+          <mxGeometry x="80" y="329" width="50" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-22" value="Lokal avlevering i ny azf-acos-interact" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="18" y="20" width="380" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.473;entryY=1.048;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-23" target="IRzBCizce1bIe2d0EAGk-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-31" value="Henter blobber ned til lokal server" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="IRzBCizce1bIe2d0EAGk-30">
+          <mxGeometry x="-0.0738" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-23" target="IRzBCizce1bIe2d0EAGk-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-23" value="Azf-interact-repo&lt;br&gt;./ground-control/index.js" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.android;fillColor=#8CC64F;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="240" y="520" width="73.5" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-24" target="IRzBCizce1bIe2d0EAGk-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-24" value="On-prem" style="image;html=1;image=img/lib/clip_art/computers/Server_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="450" y="520" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="IRzBCizce1bIe2d0EAGk-27" target="IRzBCizce1bIe2d0EAGk-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-27" value="Scheduled task" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/general/Scheduler.svg;" vertex="1" parent="1">
+          <mxGeometry x="364" y="540" width="34" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="IRzBCizce1bIe2d0EAGk-33" value="ROOT_AVLEVERING" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/general/Folder_Blank.svg;" vertex="1" parent="1">
+          <mxGeometry x="80" y="610" width="69" height="56.00000000000001" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

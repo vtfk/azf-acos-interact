@@ -2,6 +2,10 @@
 ## Description
 A script that pulls files from ground-control storage account and saves them to local disk. Created for being able to have "lokal avlevering" when ACOS shuts that down...
 
+## Flyt
+![image](https://github.com/vtfk/azf-acos-interact/assets/25528003/7a0da8c0-eb37-4dc5-9e7f-6bef57702321)
+
+
 ## Setup
 Create .env file within this directory (./ground-control/.env) with values
 ```bash

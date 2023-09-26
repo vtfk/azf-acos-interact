@@ -3,7 +3,7 @@
 A script that pulls files from ground-control storage account and saves them to local disk. Created for being able to have "lokal avlevering" when ACOS shuts that down...
 
 ## Flyt
-![image](https://github.com/vtfk/azf-acos-interact/assets/25528003/7a0da8c0-eb37-4dc5-9e7f-6bef57702321)
+![image](https://github.com/vtfk/azf-acos-interact/assets/25528003/ec05bb90-aa3a-4d10-9c93-768ab9ebd8e3)
 
 
 ## Setup

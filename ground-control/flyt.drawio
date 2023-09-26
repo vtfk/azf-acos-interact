@@ -1,9 +1,12 @@
-<mxfile host="app.diagrams.net" modified="2023-09-26T10:42:37.090Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.41" etag="dHO-jgoeElgt0HVc5tk2" version="21.7.2" type="device">
+<mxfile host="app.diagrams.net" modified="2023-09-26T10:48:15.147Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.41" etag="_bkIBvgY1UanEcKfeFdl" version="21.7.2" type="device">
   <diagram name="Page-1" id="OenxXWQxkFeTiB5he88d">
     <mxGraphModel dx="1215" dy="688" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="IRzBCizce1bIe2d0EAGk-35" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="10" y="490" width="600" height="240" as="geometry" />
+        </mxCell>
         <mxCell id="IRzBCizce1bIe2d0EAGk-1" value="AZF-acos-interact" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/compute/Function_Apps.svg;" vertex="1" parent="1">
           <mxGeometry x="330" y="120" width="68" height="60" as="geometry" />
         </mxCell>

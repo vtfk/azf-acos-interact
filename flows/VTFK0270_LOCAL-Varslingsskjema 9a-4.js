@@ -12,36 +12,36 @@ module.exports = {
   },
 
   /* XML from Acos:
-ArchiveData {
-	string skjemaInnsenderNavn
-	string skjemaInnsenderEpost
-	string skjemaInnsenderSkole
-	string datoForVarsling
-	string krenketElevNavn
-	string krenketElevFnr
-	string krenketElevKlasse
-	string ivolverte
-	string informerte
-	string epostRektor
-	string epostAvdLeder
-	string epostAvdLederSkjult
-	string typeVold
-	string typeTrakassering
-	string typeMobbing
-	string typeDiskriminering
-	string typeDigiKrenkelser
-	string typeAnnet
-	string hendelseBeskrivelse
-	string handlingBeskrivelse
-	string tqmVarsling
-	string fyltutAvVarsler
-	string navnPaVarsler
-}
+  ArchiveData {
+    string skjemaInnsenderNavn
+    string skjemaInnsenderEpost
+    string skjemaInnsenderSkole
+    string datoForVarsling
+    string krenketElevNavn
+    string krenketElevFnr
+    string krenketElevKlasse
+    string ivolverte
+    string informerte
+    string epostRektor
+    string epostAvdLeder
+    string epostAvdLederSkjult
+    string typeVold
+    string typeTrakassering
+    string typeMobbing
+    string typeDiskriminering
+    string typeDigiKrenkelser
+    string typeAnnet
+    string hendelseBeskrivelse
+    string handlingBeskrivelse
+    string tqmVarsling
+    string fyltutAvVarsler
+    string navnPaVarsler
+  }
 
   */
 
- // Arkivert som 9a-4 elvens navn 
-syncPrivatePerson: {
+  // Arkivert som 9a-4 elvens navn
+  syncPrivatePerson: {
     enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
@@ -58,12 +58,12 @@ syncPrivatePerson: {
     options: {
       mapper: (flowStatus) => {
         const school = schoolInfo.find(school => school.officeLocation === flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole)
-        if(!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
+        if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
           service: 'ProjectService',
           method: 'CreateProject',
           parameter: {
-            Title:  `§9A-4 sak - ${getSchoolYear()} - ${school.officeLocation}%`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
+            Title: `§9A-4 sak - ${getSchoolYear()} - ${school.officeLocation}%`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
             ResponsiblePersonIdNumber: school.orgNr,
             AccessGroup: school.tilgangsgruppe
           }
@@ -71,11 +71,11 @@ syncPrivatePerson: {
       },
       getProjectParameter: (flowStatus) => {
         const school = schoolInfo.find(school => school.officeLocation === flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole)
-        if(!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
+        if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
           Title: `§9A-4 sak - ${getSchoolYear()}%`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
           ContactReferenceNumber: school.orgNr,
-          StatusCode: "Under utføring"
+          StatusCode: 'Under utføring'
         }
       }
     }
@@ -86,7 +86,7 @@ syncPrivatePerson: {
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const school = schoolInfo.find(school => school.officeLocation === xmlDataskjemaInnsenderSkole)
+        const school = schoolInfo.find(school => school.officeLocation === xmlData.skjemaInnsenderSkole)
         return {
           service: 'CaseService',
           method: 'CreateCase',
@@ -97,7 +97,7 @@ syncPrivatePerson: {
             Status: 'B',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            AccessGroup: school['9a4Tilgangsgruppe'], //9a-4 tilgangsgruppe til den skolen det gjelder
+            AccessGroup: school['9a4Tilgangsgruppe'], // 9a-4 tilgangsgruppe til den skolen det gjelder
             JournalUnit: 'Sentralarkiv',
             SubArchive: '4',
             ArchiveCodes: [
@@ -111,12 +111,12 @@ syncPrivatePerson: {
                 ArchiveType: 'FAGKLASSE PRINSIPP',
                 Sort: 2
               },
-            //   {
-            //     ArchiveCode: '--',
-            //     ArchiveType: 'TILLEGGSKODE PRINSIPP',
-            //     Sort: 3,
-            //     IsManualText: true
-            //   },
+              //   {
+              //     ArchiveCode: '--',
+              //     ArchiveType: 'TILLEGGSKODE PRINSIPP',
+              //     Sort: 3,
+              //     IsManualText: true
+              //   },
               {
                 ArchiveCode: xmlData.krenketElevFnr,
                 ArchiveType: 'FNR',
@@ -177,12 +177,12 @@ syncPrivatePerson: {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-            company: 'OF',
-            department: 'Pedagogisk støtte og utvikling',
-            description,
-            type: 'Varsling ved brudd på oppll. $9a-4', // Required. A short searchable type-name that distinguishes the statistic element
-            // optional fields:
-            skole: schoolInfo.find(school => school.officeLocation === xmlData.skjemaInnsenderSkole)
+          company: 'OF',
+          department: 'Pedagogisk støtte og utvikling',
+          description,
+          type: 'Varsling ved brudd på oppll. $9a-4', // Required. A short searchable type-name that distinguishes the statistic element
+          // optional fields:
+          skole: schoolInfo.find(school => school.officeLocation === xmlData.skjemaInnsenderSkole)
         }
       }
     }

@@ -76,9 +76,18 @@ Denne jobben får inn fødselsnummer eller annen persondata (kan også generere 
 ### syncEmployee
 Denne jobben får inn fødselsnummer og UPN, oppretter eller oppdaterer personalprosjekt i arkiv. Returnerer persondata, tilgangsgrupper og prosjektnummer. [Se eksempler her](./example-flows/EX004-sync-employee.js)
 
+### handleProject
+Denne jobben får inn metadata for et prosjekt, og eventuelt en getProject-parameter for å se om et prosjekt finnes allerede før den oppretter. Returnerer prosjektnummer og recno. 
+[Se eksempler her](./example-flows/EX013-handle-project.js)
+
 ### handleCase
 Denne jobben får inn metadata for en sak, og eventuelt en getCase-parameter for å se om en sak finnes allerede før den oppretter. Returnerer saksnummer. 
 [Se eksempler her](./example-flows/EX005-handle-case.js)
+
+### handleProject
+Denne jobben får inn metadata for et prosjekt, og oppretter prosjektet. 
+[Se eksempler her](./example-flows/EX013-handle-project.js)
+
 ### archive
 Denne jobben får inn metadata for dokument eller en template-henvisning til azf-archive, Returnerer dokumentnummer. 
 [Se eksempler her](./example-flows/EX010-archive-handle-case.js)
@@ -109,6 +118,13 @@ finishFlow vil alltid være enabled. Denne sletter blobene hvis man ikke setter 
   }
 }
 ```
+## flow-helpers.js
+En fil som eksporterer enkle funjsoner som du kanskje har bruk for i andre flow filer. 
+
+### getSchoolYear
+Denne funksjonen returnerer skoleår på dette formatet: 2023/2024. 
+Du kan sende med et dato objekt om du ønsker å få skole året for en spesifikk dato. 
+
 ## Retry håndtering
 Styres av miljøvariabelen retryIntervalMinutes. Legges inn på formatet '{antall minutter for første retry}, {osv}'
 

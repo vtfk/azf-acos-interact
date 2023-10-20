@@ -67,7 +67,7 @@ module.exports = {
             Contacts: [
               {
                 ReferenceNumber: school.orgNr,
-                Role: "Ansvarlig"
+                Role: 'Ansvarlig'
               }
             ],
             AccessGroup: school['9a4Tilgangsgruppe']

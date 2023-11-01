@@ -57,7 +57,7 @@ module.exports = {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const school = schoolInfo.find(school => school.officeLocation === flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole)
+        const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
         if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
           service: 'ProjectService',
@@ -75,7 +75,7 @@ module.exports = {
         }
       },
       getProjectParameter: (flowStatus) => {
-        const school = schoolInfo.find(school => school.officeLocation === flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole)
+        const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
         if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
           Title: `§9A-4 - ${getSchoolYear()} - %`, // check for exisiting project with this title, '%' er wildcard når vi søker i 360 eller sif api.
@@ -91,7 +91,7 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const school = schoolInfo.find(school => school.officeLocation === xmlData.skjemaInnsenderSkole)
+        const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
         if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
           service: 'CaseService',
@@ -150,7 +150,7 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const school = schoolInfo.find(school => school.officeLocation === xmlData.skjemaInnsenderSkole)
+        const school = schoolInfo.find(school => flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole.startsWith(school.officeLocation))
         if (!school) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         return {
           service: 'DocumentService',

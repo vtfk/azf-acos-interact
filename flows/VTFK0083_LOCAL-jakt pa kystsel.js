@@ -83,7 +83,7 @@ string Epost
   },
 
   signOff: {
-    enabled: false
+    enabled: true
   },
 
   closeCase: {

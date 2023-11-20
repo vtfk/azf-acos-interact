@@ -84,10 +84,6 @@ Denne jobben får inn metadata for et prosjekt, og eventuelt en getProject-param
 Denne jobben får inn metadata for en sak, og eventuelt en getCase-parameter for å se om en sak finnes allerede før den oppretter. Returnerer saksnummer. 
 [Se eksempler her](./example-flows/EX005-handle-case.js)
 
-### handleProject
-Denne jobben får inn metadata for et prosjekt, og oppretter prosjektet. 
-[Se eksempler her](./example-flows/EX013-handle-project.js)
-
 ### archive
 Denne jobben får inn metadata for dokument eller en template-henvisning til azf-archive, Returnerer dokumentnummer. 
 [Se eksempler her](./example-flows/EX010-archive-handle-case.js)

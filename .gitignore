@@ -105,6 +105,7 @@ dist
 
 # Local settings
 local.settings.json
+not_ready_local.settings.json
 
 .vscode/
 

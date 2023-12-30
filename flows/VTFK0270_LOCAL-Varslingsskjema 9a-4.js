@@ -4,7 +4,7 @@ const { getSchoolYear } = require('../lib/flow-helpers')
 const { schoolInfo } = require('../lib/data-sources/vtfk-schools')
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: false
   },
   parseXml: {

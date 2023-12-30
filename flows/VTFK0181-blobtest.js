@@ -1,6 +1,6 @@
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: true
   },
   parseXml: {

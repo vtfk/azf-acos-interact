@@ -41,7 +41,7 @@ const getCountyAndProject = (kommune) => {
 
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: false
   },
   parseXml: {

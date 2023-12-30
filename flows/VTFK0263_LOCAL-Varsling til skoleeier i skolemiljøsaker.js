@@ -1,7 +1,7 @@
 const description = 'Varsling til skoleeier §§ alvorlige 9A-4 og 5 saker'
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: false
   },
   parseXml: {

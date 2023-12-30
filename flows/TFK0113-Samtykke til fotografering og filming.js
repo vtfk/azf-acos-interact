@@ -21,7 +21,7 @@ module.exports = {
         return [
           {
             testListUrl: '',
-            prodListUrl: 'https://vestfoldfylke.sharepoint.com/sites/ORG-Bilde-ogvideoarkiv-Samtykkeskjema2021/Lists/Samtykke',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/ORG-Bilde-ogvideoarkiv-Samtykkeskjema2021/Lists/Samtykke',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

@@ -3,7 +3,7 @@ const description = 'Sender til Sharepoint'
 
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -21,7 +21,7 @@ module.exports = {
         return [
           {
             testListUrl: '',
-            prodListUrl: 'https://vestfoldfylke.sharepoint.com/sites/SAMF-Prosjektportefljeinvesteringfylkesvei/Lists/Innmeldte%20prosjekt',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMF-Prosjektportefljeinvesteringfylkesvei/Lists/Innmeldte%20prosjekt',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {

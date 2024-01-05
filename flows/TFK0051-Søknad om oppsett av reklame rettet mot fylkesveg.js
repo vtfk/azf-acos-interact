@@ -3,7 +3,7 @@ const { nodeEnv } = require('../config')
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -64,7 +64,7 @@ ArchiveData {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '' : '23-16', // Må lages nytt prosjekt for Prod i 2024,
+            Project: nodeEnv === 'production' ? '24-100' : '23-16', // Må lages nytt prosjekt for Prod i 2024,
             Title: `${xmlData.Veg} - ${xmlData.Kommune} - Søknad om reklame`,
             Status: 'B',
             AccessCode: 'U',

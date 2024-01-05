@@ -3,7 +3,7 @@ const { nodeEnv } = require('../config')
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -41,7 +41,7 @@ string Epost
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? 'må fylles inn!' : '23/00078' // 23/00076 - Robin sin testesak i test arkiv.
+        const caseNumber = nodeEnv === 'production' ? '24/01203' : '23/00078'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,

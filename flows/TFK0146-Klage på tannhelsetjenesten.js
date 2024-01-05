@@ -1,5 +1,6 @@
-const description = 'Søknad om utsetting av ferskvannsfisk'
-const { nodeEnv } = require('../config')
+const description = 'Klage på tannhelsetjenesten Skal opprettes en ny sak pr skjema'
+// const { nodeEnv } = require('../config')
+const { clinics } = require('../lib/data-sources/tfk-dentalclinics')
 
 module.exports = {
   config: {
@@ -10,20 +11,7 @@ module.exports = {
     enabled: true
   },
 
-  /* XML from Acos:
-ArchiveData {
-string fnr
-string Fornavn
-string Etternavn
-string Adresse
-string Postnr
-string Poststed
-string Mobilnr
-string Epost
-}
-
-  */
-  syncPrivatePerson: {
+  syncPrivatePersonInnsender: {
     enabled: true,
     options: {
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
@@ -38,32 +26,42 @@ string Epost
     enabled: true,
     options: {
       mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const clinic = clinics.find(clinic => clinic.name === xmlData.Egendefinert1)
+        if (!clinic) throw new Error(`Could not find any clinic with Name: ${xmlData.Egendefinert1}`)
         return {
           service: 'CaseService',
           method: 'CreateCase',
           parameter: {
-            CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-99' : '23-18', // Må lages nytt prosjekt for Prod i 2024,
-            Title: `Søknad om utsetting av fisk i ${flowStatus.parseXml.result.ArchiveData.Egendefinert1} - ${flowStatus.parseXml.result.ArchiveData.Kommune} kommune`,
-            // UnofficialTitle: ,
+            CaseType: 'Pasientbehandling',
+            Title: 'Tannbehandling',
+            UnofficialTitle: `Tannbehandling - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
             Status: 'B',
+            AccessCode: '13',
+            Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             JournalUnit: 'Sentralarkiv',
-            SubArchive: 'Sakarkiv',
+            SubArchive: 'Pasientbehandling',
             ArchiveCodes: [
               {
-                ArchiveCode: '---',
-                ArchiveType: 'FELLESKLASSE PRINSIPP',
+                ArchiveCode: 'G40',
+                ArchiveType: 'FAGKLASSE PRINSIPP',
                 Sort: 1
               },
               {
-                ArchiveCode: 'K62',
-                ArchiveType: 'FAGKLASSE PRINSIPP',
+                ArchiveCode: xmlData.Fnr, // xmlData.ElevFnr,
+                ArchiveType: 'FNR',
+                IsManualText: true,
                 Sort: 2
               }
             ],
-            // ResponsibleEnterpriseNumber: '45678912',
-            ResponsiblePersonEmail: 'jamila.synnove.saber@telemarkfylke.no',
-            AccessGroup: 'Alle'
+            Contacts: [
+              {
+                Role: 'Sakspart',
+                ReferenceNumber: xmlData.Fnr,
+                IsUnofficial: true
+              }
+            ],
+            ResponsibleEnterpriseNumber: clinic.orgNr
           }
         }
       }
@@ -76,7 +74,7 @@ string Epost
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         const caseNumber = flowStatus.handleCase.result.CaseNumber
-        // const caseNumber = nodeEnv === 'production' ? 'må fylles inn!' : '23/00115'
+        const clinic = clinics.find(clinic => clinic.name === xmlData.Egendefinert1)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -90,41 +88,38 @@ string Epost
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
+            AccessCode: '13',
+            Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
+            // AccessGroup: '', // Automatic
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.Fnr,
                 Role: 'Avsender',
-                IsUnofficial: false
+                ReferenceNumber: xmlData.Fnr, // Hvis privatperson skal FNR benyttes, hvis ikke skal orgnr brukes
+                IsUnofficial: true
               }
             ],
+            DocumentDate: new Date().toISOString(),
             Files: [
               {
                 Base64Data: base64,
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Søknad om utsetting av fisk',
+                Title: 'Klage på tannhelsetjenesten',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
+            ResponsibleEnterpriseNumber: clinic.orgNr,
             Status: 'J',
-            DocumentDate: new Date().toISOString(),
-            Title: `Søknad om utsetting av fisk - ${xmlData.Kommune}`,
-            UnofficialTitle: `Søknad om utsetting av fisk - ${xmlData.Egendefinert1} - ${xmlData.Kommune}`,
-            Archive: 'Saksdokument',
-            CaseNumber: caseNumber,
-            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200025' : '200031', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
-            ResponsiblePersonEmail: 'jamila.synnove.saber@telemarkfylke.no',
-            AccessCode: '7',
-            Paragraph: 'Offl. § 7d',
-            AccessGroup: 'Klima og miljø'
+            Title: 'Klage på tannhelsetjenesten',
+            Archive: 'Pasientbehandling',
+            CaseNumber: caseNumber
           }
         }
       }
     }
-
   },
 
   signOff: {
@@ -139,15 +134,16 @@ string Epost
     enabled: true,
     options: {
       mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-          company: 'Samfunnsutvikling',
-          department: 'Klima og miljø',
+          company: 'Tannhelse',
+          department: 'Tannhelse',
           description, // Required. A description of what the statistic element represents
-          type: 'Utsetting av ferskvannsfisk', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Klage på tannhelsetjenesten', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber, // Optional. anything you like
-          kommune: flowStatus.parseXml.result.ArchiveData.Kommune
+          clinic: xmlData.Egendefinert1
         }
       }
     }

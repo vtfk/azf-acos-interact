@@ -21,25 +21,24 @@ module.exports = {
         return [
           {
             testListUrl: '',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/EKOMsknader',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/NIK-FVT-Elektroniskeskjemaer/Lists/InnsokingEldrehelse',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
                 Title: xmlData.Fnr,
                 Fornavn: xmlData.Fornavn,
                 Etternavn: xmlData.Etternavn,
-                E_x002d_postadresse: xmlData.Epost,
-                Mobilnummer: xmlData.Mobilnr,
-                Fag_x002d_ogsvennebrev: xmlData.FagSvennebrev,
-                Annenutdanning: xmlData.AnnenUtdanning,
-                Firmanavn: xmlData.Firmanavn,
-                Praksis_x002f_fartstid: xmlData.PraksisFartstid,
-                Adresse: xmlData.Adresse,
-                Postnummer: xmlData.Postnr,
+                E_x002d_post: xmlData.Epost,
+                Mobil: xmlData.Mobilnr,
+                Gateadresse: xmlData.Gateadresse,
+                Navnp_x00e5_arbeidssted: xmlData.Hovedarbeidssted,
+                Kommune: xmlData.Kommune,
+                Hovedarbeidssted: xmlData.Hovedarbeidssted,
+                Utdanningsbakgrunn: xmlData.Utdanningsbakgrunn,
+                _x0031__x002e_prioritet: xmlData.Pri1,
+                _x0032__x002e_prioritet: xmlData.Pri2,
+                Postnr: xmlData.PostNr,
                 Sted: xmlData.Sted,
-                Org_x002e_nummer: xmlData.Orgnr,
-                Fakturaadresse: xmlData.Firmaadresse,
-                Kurs: 'Energirådgiver elektro'
             }
           }
         ]
@@ -57,7 +56,7 @@ module.exports = {
           company: 'NIK',
           department: 'Fagskolen',
           description,
-          type: 'Energirådgiver elektro' // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Eldrehelse' // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           // tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           // documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like

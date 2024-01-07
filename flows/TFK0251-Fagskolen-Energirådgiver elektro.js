@@ -25,21 +25,21 @@ module.exports = {
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-                Title: xmlData.Fnr,
-                Fornavn: xmlData.Fornavn,
-                Etternavn: xmlData.Etternavn,
-                E_x002d_postadresse: xmlData.Epost,
-                Mobilnummer: xmlData.Mobilnr,
-                Fag_x002d_ogsvennebrev: xmlData.FagSvennebrev,
-                Annenutdanning: xmlData.AnnenUtdanning,
-                Firmanavn: xmlData.Firmanavn,
-                Praksis_x002f_fartstid: xmlData.PraksisFartstid,
-                Adresse: xmlData.Adresse,
-                Postnummer: xmlData.Postnr,
-                Sted: xmlData.Sted,
-                Org_x002e_nummer: xmlData.Orgnr,
-                Fakturaadresse: xmlData.Firmaadresse,
-                Kurs: 'Energirådgiver elektro'
+              Title: xmlData.Fnr,
+              Fornavn: xmlData.Fornavn,
+              Etternavn: xmlData.Etternavn,
+              E_x002d_postadresse: xmlData.Epost,
+              Mobilnummer: xmlData.Mobilnr,
+              Fag_x002d_ogsvennebrev: xmlData.FagSvennebrev,
+              Annenutdanning: xmlData.AnnenUtdanning,
+              Firmanavn: xmlData.Firmanavn,
+              Praksis_x002f_fartstid: xmlData.PraksisFartstid,
+              Adresse: xmlData.Adresse,
+              Postnummer: xmlData.Postnr,
+              Sted: xmlData.Sted,
+              Org_x002e_nummer: xmlData.Orgnr,
+              Fakturaadresse: xmlData.Firmaadresse,
+              Kurs: 'Energirådgiver elektro'
             }
           }
         ]

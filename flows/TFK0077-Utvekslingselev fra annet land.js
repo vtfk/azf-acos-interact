@@ -1,6 +1,5 @@
-const description = 'Sender til elevmappe'
-// const { nodeEnv } = require('../config')
-const { schoolInfo } = require('../lib/data-sources/tfk-schools')
+const description = 'Sender til elevmappe (lager elevmappe basert på at eleven kommer fra utlandet='
+const { nodeEnv } = require('../config')
 module.exports = {
   config: {
     enabled: true,
@@ -11,43 +10,36 @@ module.exports = {
     options: {
     }
   },
-  /* Felter fra Acos:
-    ArchiveData {
-      bool TilArkiv
-      string Fnr
-      string Fornavn
-      string Etternavn
-      string Adresse
-      string PostnummerSted
-      string Postnr
-      string Poststed
-      string Mobil
-      string Epost
-      string Eksamenssted
-      string TypeDok
-      string TypeAut
-      string OnsketMottak
-      string Status
-      string Saksbehandler
-      string Fag
-      string AarSemester
-      string AltAdresse
-      string AnsVirksomhet
-    }
-  */
 
   // Synkroniser elevmappe
   syncElevmappe: {
     enabled: true,
     options: {
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
-      },
-      mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
+      mapper: (flowStatus) => { // for å opprette person manuelt uten oppslag i Freg (Eks. utenlandske elever)
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
-        return {
-          ssn: flowStatus.parseXml.result.ArchiveData.Fnr
+        const dateList = flowStatus.parseXml.result.ArchiveData.Fdato.split('.')
+        const newDate = `${dateList[2]}-${dateList[1]}-${dateList[0]}`
+        let gender
+        if (flowStatus.parseXml.result.ArchiveData.Kjonn === 'Mann') {
+          gender = 'm'
+        } else if (flowStatus.parseXml.result.ArchiveData.Kjonn === 'Kvinne') {
+          gender = 'f'
+        } else {
+          throw new Error('Kjønn må være enten Mann eller Kvinne')
         }
+        const payload = {
+          fakeSsn: true,
+          manualData: true,
+          birthdate: newDate,
+          gender,
+          firstName: flowStatus.parseXml.result.ArchiveData.Fornavn,
+          lastName: flowStatus.parseXml.result.ArchiveData.Etternavn,
+          streetAddress: flowStatus.parseXml.result.ArchiveData.Adresse || 'Ukjent adresse',
+          zipCode: flowStatus.parseXml.result.ArchiveData.Postnr || '9999',
+          zipPlace: flowStatus.parseXml.result.ArchiveData.Poststed || 'Ukjent poststed',
+          forceUpdate: true // optional - forces update of privatePerson instead of quick return if it exists
+        }
+        return payload
       }
     }
   },
@@ -56,14 +48,14 @@ module.exports = {
   archive: { // archive må kjøres for å kunne kjøre signOff (noe annet gir ikke mening)
     enabled: true,
     options: {
+      /*
       condition: (flowStatus) => { // use this if you only need to archive some of the forms.
         return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'true'
       },
+      */
       mapper: (flowStatus, base64, attachments) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
+        // const xmlData = flowStatus.parseXml.result.ArchiveData
         const elevmappe = flowStatus.syncElevmappe.result.elevmappe
-        const school = schoolInfo.find(school => school.orgNr.toString() === xmlData.AnsVirksomhet)
-        if (!school) throw new Error(`Could not find any school with orgNr: ${xmlData.AnsVirksomhet}`)
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -78,11 +70,11 @@ module.exports = {
           method: 'CreateDocument',
           parameter: {
             AccessCode: '13',
-            AccessGroup: school.tilgangsgruppe,
+            AccessGroup: 'Elev inntak',
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.Fnr,
+                ReferenceNumber: flowStatus.syncElevmappe.result.privatePerson.ssn,
                 Role: 'Avsender',
                 IsUnofficial: true
               }
@@ -94,18 +86,18 @@ module.exports = {
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Bestilling av dokumentasjon for privatister',
+                Title: 'Utvekslingselev fra annet land - Søknad',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsibleEnterpriseNumber: xmlData.AnsVirksomhet,
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200471' : '200250', // Seksjon Sektorstøtte, inntak og eksamen
             // ResponsiblePersonEmail: '',
             Status: 'J',
-            Title: 'Bestilling av dokumentasjon for privatister',
-            // UnofficialTitle: '',
-            Archive: 'Elevdokument',
+            Title: 'Utvekslingselev fra annet land - Søknad',
+            // UnofficialTitle: `Utvekslingselev fra annet land - Søknad - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
+            Archive: 'Sensitivt elevdokument',
             CaseNumber: elevmappe.CaseNumber
           }
         }
@@ -121,43 +113,44 @@ module.exports = {
   closeCase: {
     enabled: false
   },
-
+  /*
   sharepointList: {
     enabled: true,
     options: {
-      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
-        return flowStatus.parseXml.result.ArchiveData.TilArkiv === 'false'
-      },
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
+        if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML')
         return [
           {
-            testListUrl: '',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/OPT-TAN-Utdanningfolkehelseogtannhelse/Lists/Privatistdokumentasjon/AllItems.aspx',
+            siteId: '0a4121ce-7384-474c-afff-ee20f48bff5e',
+            path: 'sites/BDK-Jrgensteste-team/Lists/ACOS%20test%20%20Bestilling%20av%20dokumentasjon%20for%20privati/AllItems.aspx',
+            listId: 'D1085908-9111-4b6d-84d3-fc8ecd29d398',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
-              Title: xmlData.Fnr,
+              Title: xmlData.Fnr || 'Mangler fnr', // husk å bruke internal name på kolonnen
               Fornavn: xmlData.Fornavn,
               Etternavn: xmlData.Etternavn,
               Adresse: xmlData.Adresse,
-              Postnummerogsted: xmlData.PostnummerSted,
-              Mobilnummer: xmlData.Mobil,
+              Postnummerogsted: `${xmlData.Postnr} ${xmlData.Poststed}`,
+              Mobil: xmlData.Mobil,
               E_x002d_postadresse: xmlData.Epost,
               Typedokumentasjon: xmlData.TypeDok,
-              Typeautorisasjon: xmlData.TypeAut,
+              Typeautorasisjon: xmlData.TypeAut,
               Eksamenssted: xmlData.Eksamenssted,
               Fag: xmlData.Fag,
               _x00d8_nsketmottak: xmlData.OnsketMottak,
-              Eksamensperiode_x0028_semester_x: xmlData.AarSemester,
+              Eksamensperiode: xmlData.AarSemester,
               Alternativadresse: xmlData.AltAdresse
+
             }
           }
         ]
       }
     }
   },
+  */
+
   statistics: {
     enabled: true,
     options: {
@@ -166,9 +159,9 @@ module.exports = {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'Opplæring',
-          department: 'Eksamen',
+          department: 'Sektorstøtte, inntak og eksamen',
           description,
-          type: 'Bestilling av dokumentasjon for privatister', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Utvekslingselev fra annet land - Søknad', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
           documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like

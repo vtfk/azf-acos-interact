@@ -11,9 +11,12 @@ module.exports = {
     options: {
     }
   },
+  groundControl: {
+    enabled: true // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
+  },
 
   sharepointList: {
-    enabled: true,
+    enabled: false,
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.Skjema

@@ -95,7 +95,7 @@ module.exports = {
           documentData.parameter.ResponsibleEnterpriseNumber = xmlData.SkoleOrgNr
           documentData.parameter.AccessGroup = school.tilgangsgruppe
         } else if (xmlData.Egendefinert1 === 'Lærling/lærekandidat/praksiskandidat') {
-          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200472' : '200249', // Seksjon Fag- og yrkesopplæring
+          documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200472' : '200249' // Seksjon Fag- og yrkesopplæring
           documentData.parameter.AccessGroup = 'Fagopplæring'
         } else if (xmlData.Egendefinert1 === 'Voksen (Talenthuset)') {
           documentData.parameter.ResponsibleEnterpriseRecno = nodeEnv === 'production' ? '200693' : 'Finnes ikke i test' // Talenthuset // denne er ikke verifisert

@@ -93,7 +93,7 @@ module.exports = {
   closeCase: {
     enabled: false
   },
-  
+
   statistics: {
     enabled: true,
     options: {

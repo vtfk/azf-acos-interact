@@ -76,7 +76,7 @@ string Epost
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: 'Jakt på kystsel 2024 - Sluttrapport',
+            Title: 'Jakt på kystsel 2024',
             // UnofficialTitle: 'Jakt på kystsel 2024',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,

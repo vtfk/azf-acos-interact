@@ -1,4 +1,4 @@
-const description = 'Jakt på kystsel'
+const description = 'Sluttrapport for jakt på kystsel'
 const { nodeEnv } = require('../config')
 
 module.exports = {
@@ -41,7 +41,7 @@ string Epost
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? '24/01203' : '23/00078'
+        const caseNumber = nodeEnv === 'production' ? '24/04176' : '24/00009'
         const p360Attachments = attachments.map(att => {
           return {
             Base64Data: att.base64,
@@ -52,13 +52,14 @@ string Epost
           }
         })
         return {
+
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.fnr,
+                ReferenceNumber: xmlData.Fnr,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
@@ -69,18 +70,18 @@ string Epost
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Jakt på kystsel 2024',
+                Title: 'Jakt på kystsel 2024 - sluttrapport',
                 VersionFormat: 'A'
               },
               ...p360Attachments
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: 'Jakt på kystsel 2024 – Søknadsskjema',
-            // UnofficialTitle: 'Jakt på kystsel 2024',
+            Title: 'Jakt på kystsel 2024 - sluttrapport',
+            // UnofficialTitle: 'Jakt på kystsel 2024 - sluttrapport',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
-            // ResponsibleEnterpriseNumber: nodeEnv === 'production' ? 'må fylles inn!' : 'må fylles inn!', // Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
+            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200025' : '200031', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
             ResponsiblePersonEmail: 'jamila.synnove.saber@telemarkfylke.no',
             AccessCode: 'U',
             Paragraph: '',

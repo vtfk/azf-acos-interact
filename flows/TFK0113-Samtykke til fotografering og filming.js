@@ -3,7 +3,7 @@ const description = 'Sender til Sharepoint. Samme liste som VFK0112'
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
@@ -21,13 +21,13 @@ module.exports = {
         return [
           {
             testListUrl: '',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/ORG-Bilde-ogvideoarkiv-Samtykkeskjema2021/Lists/Samtykke',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/BDK-Bilde-ogvideoarkiv-Samtykkeskjema20212/Lists/Samtykke',
             uploadFormPdf: true,
             uploadFormAttachments: true,
             fields: {
               AnsattVTFK: xmlData.AnsattVTFK,
               Brukernavn_x0028_ansatt_x0029_: xmlData.Brukernavn,
-              Etternavn: xmlData.Etternavn,
+              Etternavn: `${xmlData.Navn} ${xmlData.Etternavn}`,
               Datoforsamtykke: xmlData.DatoSamtykke,
               E_x002d_postadresse: xmlData.Epost,
               Mobilnummer: xmlData.Mobil,

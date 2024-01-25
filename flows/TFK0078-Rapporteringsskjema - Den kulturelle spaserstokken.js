@@ -1,11 +1,11 @@
 module.exports = {
-    config: {
-      enabled: false,
-      doNotRemoveBlobs: false
-    },
-    parseXml: {
-      enabled: true,
-      options: {
-      }
-    },
+  config: {
+    enabled: false,
+    doNotRemoveBlobs: false
+  },
+  parseXml: {
+    enabled: true,
+    options: {
+    }
+  }
 }

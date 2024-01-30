@@ -16,19 +16,19 @@ module.exports = {
   statistics: {
     enabled: true,
     options: {
-        mapper: (flowStatus) => {
-            // const xmlData = flowStatus.parseXml.result.ArchiveData
-            // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
-            return {
-              company: 'NIK',
-              department: 'Fagskolen',
-              description,
-              type: 'Energirådgiver elektro' // Required. A short searchable type-name that distinguishes the statistic element
-              // optional fields:
-              // tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
-              // documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
-            }
-          }
+      mapper: (flowStatus) => {
+        // const xmlData = flowStatus.parseXml.result.ArchiveData
+        // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
+        return {
+          company: 'NIK',
+          department: 'Fagskolen',
+          description,
+          type: 'Energirådgiver elektro' // Required. A short searchable type-name that distinguishes the statistic element
+          // optional fields:
+          // tilArkiv: flowStatus.parseXml.result.ArchiveData.TilArkiv,
+          // documentNumber: flowStatus.archive?.result?.DocumentNumber || 'tilArkiv er false' // Optional. anything you like
+        }
+      }
     }
   },
   failOnPurpose: {

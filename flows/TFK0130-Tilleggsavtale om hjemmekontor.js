@@ -168,7 +168,7 @@ ArchiveData {
   },
 
   closeCase: { // handleCase må kjøres for å kunne kjøre closeCase
-    enabled: false
+    enabled: true
   },
 
   sharepointList: {

@@ -3,7 +3,7 @@ const description = 'Sender til Sharepoint'
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {

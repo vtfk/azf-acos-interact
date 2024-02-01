@@ -178,8 +178,8 @@ ArchiveData {
         const xmlData = flowStatus.parseXml.result.ArchiveData
         return [
           {
-            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/HRMU-HRMU/Lists/Hjemmekontor/AllItems.aspx',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/HRMU-HRMU/Lists/Hjemmekontor/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Organisasjonogdigitalutvikling-HR-Begrensetinnsyn2/Lists/Tilleggsavtaleomhjemmekontor/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Organisasjonogdigitalutvikling-HR-Begrensetinnsyn2/Lists/Tilleggsavtaleomhjemmekontor/AllItems.aspx',
             uploadFormPdf: true,
             uploadFormAttachments: false,
             fields: {
@@ -188,9 +188,9 @@ ArchiveData {
               Etternavn: xmlData.Etternavn,
               Enhetsnavn: xmlData.Seksjon,
               Avtaleperiode: xmlData.Periode,
-              Kommentar: xmlData.Kommentar,
-              Ansattnummer: xmlData.Ansattnr,
-              F_x00f8_dselsdato: xmlData.Fdato
+              Kommentar: xmlData.Kommentar
+            //   Ansattnummer: xmlData.Ansattnr,
+            //   F_x00f8_dselsdato: xmlData.Fdato
             }
           }
         ]

@@ -93,7 +93,8 @@ string InnsenderFnr
                 IsUnofficial: true
               }
             ],
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200106' : '200116'
+            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200106' : '200116',
+            ResponsiblePersonEmail: 'hilde.ekeberg.fliid@telemarkfylke.no'
           }
         }
       }

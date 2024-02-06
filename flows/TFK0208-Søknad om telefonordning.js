@@ -3,7 +3,7 @@ const description = 'Søknad om telefonavtale'
 
 module.exports = {
   config: {
-    enabled: false,
+    enabled: true,
     doNotRemoveBlobs: true
   },
   parseXml: {
@@ -48,7 +48,7 @@ ArchiveData {
             CaseType: 'Personal',
             // Project: '20-15',
             Title: 'Avtale om telefonordning',
-            UnofficialTitle: `Avtale om telefonordning - ${flowStatus.parseXml.archiveData.Fornavn} ${flowStatus.parseXml.archiveData.Etternavn}`,
+            UnofficialTitle: `Avtale om telefonordning - ${flowStatus.parseXml.result.ArchiveData.Fornavn} ${flowStatus.parseXml.result.ArchiveData.Etternavn}`,
             Status: 'B',
             AccessCode: '7',
             Paragraph: 'Offl. § 7d',
@@ -74,7 +74,7 @@ ArchiveData {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.result.ArchiveData
         const caseNumber = flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -127,12 +127,12 @@ ArchiveData {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.result.ArchiveData
         if (!xmlData.Prosjektnummer) throw new Error('Prosjektnummer har ikke kommet med fra XML')
         return [
           {
-            testListUrl: '',
-            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/ORG-FEL-HR-begrensetinnsyn/Lists/Soknadomtelefonordning/AllItems.aspx',
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Organisasjonogdigitalutvikling-HR-Begrensetinnsyn2/Lists/Soknadomtelefonordning/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/T-Organisasjonogdigitalutvikling-HR-Begrensetinnsyn2/Lists/Soknadomtelefonordning/AllItems.aspx',
             uploadFormPdf: false,
             uploadFormAttachments: false,
             fields: {
@@ -154,7 +154,7 @@ ArchiveData {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.result.ArchiveData
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'HR',

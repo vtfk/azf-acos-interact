@@ -1,4 +1,4 @@
-const { nodeEnv } = require('../config')
+// const { nodeEnv } = require('../config')
 const description = 'Søknad om telefonavtale'
 
 module.exports = {

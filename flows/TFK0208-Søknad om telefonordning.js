@@ -50,8 +50,8 @@ ArchiveData {
             Title: 'Avtale om telefonordning',
             UnofficialTitle: `Avtale om telefonordning - ${flowStatus.parseXml.result.ArchiveData.Fornavn} ${flowStatus.parseXml.result.ArchiveData.Etternavn}`,
             Status: 'B',
-            AccessCode: '7',
-            Paragraph: 'Offl. § 7d',
+            AccessCode: '13',
+            Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             JournalUnit: 'Sentralarkiv',
             SubArchive: 'Personal',
             ArchiveCodes: [
@@ -89,7 +89,7 @@ ArchiveData {
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
-            AccessCode: '7',
+            AccessCode: '13',
             // AccessGroup: '', Automatisk tilgangsgruppe
             Category: 'Dokument inn',
             Contacts: [
@@ -111,7 +111,7 @@ ArchiveData {
               },
               ...p360Attachments
             ],
-            Paragraph: 'Offl. § 7d',
+            Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             ResponsiblePersonEmail: xmlData.LederEpost, // leder
             Status: 'J',
             Title: 'Avtale om telefonordning',

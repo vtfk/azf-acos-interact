@@ -87,7 +87,7 @@ ArchiveData {
     enabled: true,
     options: {
       mapper: (flowStatus, base64, attachments) => {
-        const xmlData = flowStatus.parseXml.result.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         const caseNumber = flowStatus.handleCase.result.CaseNumber
         const p360Attachments = attachments.map(att => {
           return {
@@ -146,7 +146,7 @@ ArchiveData {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         if (!xmlData.Prosjektnummer) throw new Error('Prosjektnummer har ikke kommet med fra XML')
         return [
           {
@@ -173,7 +173,7 @@ ArchiveData {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
-        const xmlData = flowStatus.parseXml.result.result.ArchiveData
+        const xmlData = flowStatus.parseXml.result.ArchiveData
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
           company: 'HR',

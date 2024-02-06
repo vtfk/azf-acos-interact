@@ -49,7 +49,7 @@ ArchiveData {
             // Project: '20-15',
             Title: 'Avtale om telefonordning',
             UnofficialTitle: `Avtale om telefonordning - ${flowStatus.parseXml.result.ArchiveData.Fornavn} ${flowStatus.parseXml.result.ArchiveData.Etternavn}`,
-            Status: 'B',
+            Status: 'A',
             AccessCode: '13',
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
             JournalUnit: 'Sentralarkiv',
@@ -58,13 +58,26 @@ ArchiveData {
               {
                 ArchiveCode: '542',
                 ArchiveType: 'FELLESKLASSE PRINSIPP',
-                Sort: 1
+                Sort: 2
+              },
+              {
+                ArchiveCode: flowStatus.parseXml.result.ArchiveData.Fnr,
+                ArchiveType: 'FNR',
+                Sort: 1,
+                IsManualText: true
+              }
+            ],
+            Contacts: [
+              {
+                Role: 'Sakspart',
+                ReferenceNumber: flowStatus.parseXml.result.ArchiveData.Fnr,
+                IsUnofficial: true
               }
             ],
             // ResponsibleEnterpriseNumber: '45678912'
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200010' : '200015'
-            // ResponsiblePersonEmail: 'fornavn.etternavn@domene.no',
-            // AccessGroup: 'tilgangsgruppe' // Automatisk
+            // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200010' : '200015',
+            ResponsiblePersonEmail: flowStatus.parseXml.result.ArchiveData.rettLederEpost,
+            AccessGroup: '' // Automatisk
           }
         }
       }
@@ -94,9 +107,15 @@ ArchiveData {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.orgNr.replaceAll(' ', ''),
+                ReferenceNumber: xmlData.Fnr,
                 Role: 'Avsender',
                 IsUnofficial: true
+              }
+            ],
+            UnregisteredContacts: [
+              {
+                ContactName: xmlData.GodkjentAv,
+                Role: 'Saksbehandler'
               }
             ],
             DocumentDate: new Date().toISOString(),
@@ -112,10 +131,10 @@ ArchiveData {
               ...p360Attachments
             ],
             Paragraph: 'Offl. § 13 jf. fvl. § 13 (1) nr.1',
-            ResponsiblePersonEmail: xmlData.LederEpost, // leder
+            ResponsiblePersonEmail: xmlData.rettLederEpost, // leder
             Status: 'J',
             Title: 'Avtale om telefonordning',
-            Archive: 'Saksdokument',
+            Archive: 'Personaldokument',
             CaseNumber: caseNumber
           }
         }

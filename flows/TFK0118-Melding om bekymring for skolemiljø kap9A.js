@@ -61,18 +61,18 @@ string SkoleOrgNr
             SubArchive: 'Elev',
             // Project: flowStatus.handleProject.result.ProjectNumber,
             ArchiveCodes: [
-                {
-                    ArchiveCode: xmlData.Fnr,
-                    ArchiveType: 'FNR',
-                    IsManualText: true,
-                    Sort: 1
-                  },
-                  {
-                    ArchiveCode: 'B31 - Elever',
-                    ArchiveType: 'FAGKLASSE PRINSIPP',
-                    Sort: 2,
-                    IsManualText: true
-                  }
+              {
+                ArchiveCode: xmlData.Fnr,
+                ArchiveType: 'FNR',
+                IsManualText: true,
+                Sort: 1
+              },
+              {
+                ArchiveCode: 'B31 - Elever',
+                ArchiveType: 'FAGKLASSE PRINSIPP',
+                Sort: 2,
+                IsManualText: true
+              }
             ],
             Contacts: [
               {
@@ -147,7 +147,7 @@ string SkoleOrgNr
     options: {
       mapper: (flowStatus) => {
         // const xmlData = flowStatus.parseXml.result.ArchiveData
-        const schoolName = schoolInfo.find(schoolName => flowStatus.parseXml.result.ArchiveData.SkoleOrgNr == schoolName.orgNr) //Matcher ikke på type med ==
+        const schoolName = schoolInfo.find(schoolName => Number(flowStatus.parseXml.result.ArchiveData.SkoleOrgNr) === schoolName.orgNr)
         if (!schoolName) throw new Error(`Could not find any school with officeLocation: ${flowStatus.parseXml.result.ArchiveData.skjemaInnsenderSkole}`)
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {

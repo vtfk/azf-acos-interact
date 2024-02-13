@@ -1,8 +1,7 @@
 const description = 'Søknad om utviklingsmidler til formidling av kulturarv'
 const { nodeEnv } = require('../config')
 
-
-//TODO - Avlevering til SharePoint-list
+// TODO - Avlevering til SharePoint-list
 
 module.exports = {
   config: {
@@ -59,7 +58,7 @@ ArchiveData {
           method: 'CreateCase',
           parameter: {
             CaseType: 'Sak',
-            Project: nodeEnv === 'production' ? '24-357' : '24-1', //Dette er riktig for telemark
+            Project: nodeEnv === 'production' ? '24-357' : '24-1', // Dette er riktig for telemark
             Title: `Søknad om utviklingsmidler til formidling av kulturarv - ${flowStatus.parseXml.result.ArchiveData.OmProsjektet}`,
             // UnofficialTitle: ,
             Status: 'B',

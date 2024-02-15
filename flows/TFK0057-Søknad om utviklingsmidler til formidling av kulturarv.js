@@ -5,8 +5,8 @@ const { nodeEnv } = require('../config')
 
 module.exports = {
   config: {
-    enabled: false,
-    doNotRemoveBlobs: false
+    enabled: true,
+    doNotRemoveBlobs: true
   },
   parseXml: {
     enabled: true
@@ -17,7 +17,11 @@ ArchiveData {
     string Fnr
     string OrgNr
     string TypeSoker
-    string OmProsjektet
+    string ProsjekBeskrivelse
+    string OrgNavn
+    string PersonNavn
+    string ProsjektNavn
+    string Beløp
 }
 
   */
@@ -133,7 +137,7 @@ ArchiveData {
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: `Søknad om utviklingsmidler til formidling av kulturarv - ${flowStatus.parseXml.result.ArchiveData.OmProsjektet}`,
+            Title: `Søknad om utviklingsmidler til formidling av kulturarv - ${flowStatus.parseXml.result.ArchiveData.ProsjektNavn}`,
             // UnofficialTitle: 'Søknad om utsetting av ferskvannsfisk',
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
@@ -141,7 +145,7 @@ ArchiveData {
             // ResponsiblePersonEmail: '',
             AccessCode: '26',
             Paragraph: 'Offl. § 26 femte ledd',
-            AccessGroup: 'Seksjon Kulturarv'
+            AccessGroup: 'Kulturarv'
           }
         }
       }
@@ -157,6 +161,29 @@ ArchiveData {
     enabled: false
   },
 
+  sharepointList: {
+    enabled: true,
+    options: {
+      mapper: (flowStatus) => {
+        const xmlData = flowStatus.parseXml.result.ArchiveData
+        return [
+          {
+            testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20utviklingsmidler%20til%20formidling%20av%20kultur/AllItems.aspx',
+            prodListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMU-Tilskuddsordningerkulturseksjonen/Lists/Sknad%20om%20utviklingsmidler%20til%20formidling%20av%20kultur/AllItems.aspx',
+            uploadFormPdf: true,
+            uploadFormAttachments: true,
+            fields: {
+              Title: xmlData.TypeSoker === 'på vegne av en organisasjon' ? xmlData.OrgNavn : `${xmlData.Fornavn} + ${xmlData.Etternavn}`, // Søker feltet
+              Prosjektnavn: xmlData.ProsjektNavn,
+              Beskrivelse: xmlData.ProsjekBeskrivelse,
+              S_x00f8_knadsbel_x00f8_p: xmlData.Beløp
+            }
+          }
+        ]
+      }
+    }
+  },
+
   statistics: {
     enabled: true,
     options: {
@@ -166,9 +193,9 @@ ArchiveData {
           company: 'Samfunnsutvikling',
           department: 'Kulturarv',
           description, // Required. A description of what the statistic element represents
-          type: 'Søknad om utviklingsmidler til formidling av kulturarv', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Søknad om utviklingsmidler til formidling av kulturarv' // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
-          documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
+          //   documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
       }
     }

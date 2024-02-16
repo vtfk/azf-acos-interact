@@ -6,7 +6,7 @@ const { nodeEnv } = require('../config')
 module.exports = {
   config: {
     enabled: true,
-    doNotRemoveBlobs: true
+    doNotRemoveBlobs: false
   },
   parseXml: {
     enabled: true
@@ -63,7 +63,7 @@ ArchiveData {
           parameter: {
             CaseType: 'Sak',
             Project: nodeEnv === 'production' ? '24-357' : '24-1', // Dette er riktig for telemark
-            Title: `Søknad om utviklingsmidler til formidling av kulturarv - ${flowStatus.parseXml.result.ArchiveData.OmProsjektet}`,
+            Title: `Søknad om utviklingsmidler til formidling av kulturarv - ${flowStatus.parseXml.result.ArchiveData.ProsjektNavn}`,
             // UnofficialTitle: ,
             Status: 'B',
             JournalUnit: 'Sentralarkiv',

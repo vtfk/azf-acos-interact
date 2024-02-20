@@ -90,7 +90,7 @@ ArchiveData {
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
             // ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200025' : '200031', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
-            ResponsiblePersonEmail: 'line.ruud.orslien@telemarkfylke.no',
+            ResponsiblePersonEmail: flowStatus.parseXml.result.ArchiveData.Kategori === 'Kunstnerstipend' ? 'line.ruud.orslien@telemarkfylke.no' : 'marte.aksnes@telemarkfylke.no',
             AccessCode: '5',
             Paragraph: 'Offl. § 5',
             AccessGroup: 'Seksjon Kultur'

@@ -1,6 +1,25 @@
 const description = 'TFK0087-Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet'
 const { nodeEnv } = require('../config')
 
+/*
+  Soknad {
+    string Fnr
+    string OrgNr
+    string Navn
+    string Epost
+    string Type	
+    string Tiltak
+    int Totalkostnad
+    int Soknadsbelop
+    string Egenfinansiering
+    string Beskrivelse
+    string Forslag
+    string AndreOpplysninger
+    string OrgNavn
+    string reserve2
+  }
+*/
+
 module.exports = {
   config: {
     enabled: true,
@@ -10,19 +29,25 @@ module.exports = {
     enabled: true
   },
   syncPrivatePerson: {
-    enabled: false,
+    enabled: true,
     options: {
+      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
+        return flowStatus.parseXml.result.Soknad.Fnr !== undefined || flowStatus.parseXml.result.Soknad.Fnr !== 'undefined'
+      },
       mapper: (flowStatus) => { // for å opprette person basert på fødselsnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          ssn: flowStatus.parseXml.result.ArchiveData.Fnr
+          ssn: flowStatus.parseXml.result.Soknad.Fnr
         }
       },
     }
   },
   syncEnterprise: {
-    enabled: false,
+    enabled: true,
     options: {
+      condition: (flowStatus) => { // use this if you only need to archive some of the forms.
+        return flowStatus.parseXml.result.Soknad.OrgNr !== undefined || flowStatus.parseXml.result.Soknad.OrgNr !== 'undefined'
+      },
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
@@ -32,44 +57,37 @@ module.exports = {
     }
   },
   // Arkiverer dokumentet i 360
-  handleProject: {
-    enabled: false,
+  handleCase: {
+    enabled: true,
     options: {
       mapper: (flowStatus) => {
         return {
-          service: 'ProjectService',
-          method: 'CreateProject',
+          service: 'CaseService',
+          method: 'CreateCase',
           parameter: {
-            Title: `Trafikksikkerhetstiltak i nærmiljøet 2024`,
-            ResponsiblePersonEmail: 'anncarin.risinggaard@telemarkfylke.no',
-            Contacts: [
+            CaseType: 'Sak',
+            Project: nodeEnv === 'production' ? '24-485' : '24-3',
+            Title: `Søknad om tilskudd til trafikksikkerhetstiltak - Vegnummer: ${flowStatus.parseXml.result.Soknad.Type}`,
+            // UnofficialTitle: ,
+            Status: 'B',
+            JournalUnit: 'Sentralarkiv',
+            SubArchive: 'Sakarkiv',
+            ArchiveCodes: [
               {
-                Role: 'Kontakt',
-                ReferenceNumber: flowStatus.parseXml.result.someData.fnr
+                ArchiveCode: '243',
+                ArchiveType: 'FELLESKLASSE PRINSIPP',
+                Sort: 1
+              },
+              {
+                ArchiveCode: 'Q88',
+                ArchiveType: 'FAGKLASSE PRINSIPP',
+                Sort: 2
               }
-            ]
+            ],
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200018' : '200023', // Seksjon Vegforvaltning og transport
+            ResponsiblePersonEmail: 'anncarin.risinggaard@telemarkfylke.no',
+            AccessGroup: 'Alle'
           }
-        }
-      },
-      getProjectParameter: (flowStatus) => {
-        return {
-          Title: "Trafikksikkerhetstiltak i nærmiljøet 2024"
-          //Title: `Prosjektet til Robin -${flowStatus.parseXml.archiveData.lastName}` // check for exisiting project with this title
-        }
-      },
-      getProjectParameter2: (flowStatus) => {
-        return {
-          ExternalId: flowStatus.parseXml.archiveData.guid // check for exisiting project with external ID
-        }
-      },
-      getProjectParameter3: (flowStatus) => {
-        return {
-          ProjectNumber: '24-485' // archive to this project only (project number defined here) (samleprosjekt)
-        }
-      },
-      getProjectParameter4: (flowStatus) => {
-        return {
-          ProjectNumber: flowStatus.parseXml.someData.projectNumber // archive to this project only (project number from Acos XML) (samlesak)
         }
       }
     }
@@ -79,13 +97,12 @@ module.exports = {
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.Soknad
-        let caseNumber
-        if (flowStatus.parseXml.result.Soknad.Type === 'Søknad om tilskudd til trafikksikkerhetstiltak i nærmiljøet') {
-          caseNumber = nodeEnv === 'production' ? '24/03961' : '24/00005' // Prod : Test
-        } else if (flowStatus.parseXml.result.Soknad.Type === 'Tilskudd til regionale idrettsanlegg') {
-          caseNumber = nodeEnv === 'production' ? '24/03963' : '24/00006'
+        const caseNumber = flowStatus.handleCase.result.CaseNumber
+        let contact
+        if (xmlData.OrgNr !== undefined || xmlData.OrgNr !== 'undefined') {
+          contact = xmlData.OrgNr.replaceAll(' ', '')
         } else {
-          throw new Error('Type tilskudd er feil eller har ikke kommet med')
+          contact = xmlData.Fnr
         }
         const p360Attachments = attachments.map(att => {
           return {
@@ -97,14 +114,13 @@ module.exports = {
           }
         })
         return {
-
           service: 'DocumentService',
           method: 'CreateDocument',
           parameter: {
             Category: 'Dokument inn',
             Contacts: [
               {
-                ReferenceNumber: xmlData.Orgnr.replaceAll(' ', ''),
+                ReferenceNumber: contact,
                 Role: 'Avsender',
                 IsUnofficial: false
               }
@@ -122,10 +138,10 @@ module.exports = {
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: `Søknad om tilskudd til rafikksikkerhetstiltak i nærmiljøet 2024 – ${xmlData.ArrAnlNavn}`,
+            Title: `Søknad om tilskudd til trafikksikkerhetstiltak - Vegnummer: ${flowStatus.parseXml.result.Soknad.Type}`,
             Archive: 'Saksdokument',
             CaseNumber: caseNumber,
-            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200023' : '200028', // Seksjon Kultur Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200018' : '200023', // Seksjon Vegforvaltning og transport
             AccessCode: 'U',
             Paragraph: '',
             AccessGroup: 'Alle'
@@ -147,7 +163,6 @@ module.exports = {
     options: {
       mapper: (flowStatus) => {
         const xmlData = flowStatus.parseXml.result.Soknad
-        // if (!xmlData.Postnr) throw new Error('Postnr har ikke kommet med fra XML') // validation example
         return [
           {
             testListUrl: 'https://telemarkfylke.sharepoint.com/sites/SAMF-Samferdselsektorteam/Lists/soknaderTilskuddTrafikksikkerhetstiltak/AllItems',

@@ -51,7 +51,7 @@ module.exports = {
       mapper: (flowStatus) => { // for å opprette organisasjon basert på orgnummer
         // Mapping av verdier fra XML-avleveringsfil fra Acos.
         return {
-          orgnr: flowStatus.parseXml.result.Soknad.Orgnr.replaceAll(' ', '')
+          orgnr: flowStatus.parseXml.result.Soknad.OrgNr.replaceAll(' ', '')
         }
       }
     }

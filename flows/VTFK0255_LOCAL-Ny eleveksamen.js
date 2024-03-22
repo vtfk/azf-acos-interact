@@ -1,7 +1,7 @@
 const description = 'Påmelding til ny privatisteksamen etter UDIRs eksamensfadese 2023, oppretter rad i SharePoint liste for seksjonen'
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: false
   },
   parseXml: {

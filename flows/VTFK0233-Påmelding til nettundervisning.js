@@ -2,7 +2,7 @@ const description = 'Arkivering av testdokument og opprettelse av et listeelemen
 
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: true
   },
   parseXml: {

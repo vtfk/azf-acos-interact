@@ -1,7 +1,7 @@
 const description = 'Registrering av digitale løsninger. SKal opprette rad i SP-liste'
 module.exports = {
   config: {
-    enabled: true,
+    enabled: false,
     doNotRemoveBlobs: false
   },
   parseXml: {

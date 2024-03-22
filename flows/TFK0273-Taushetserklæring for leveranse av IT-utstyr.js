@@ -1,28 +1,15 @@
-const description = 'Jakt på kystsel'
+const description = 'Taushetserklæring for leveranse av IT-utstyr'
 const { nodeEnv } = require('../config')
-
 module.exports = {
   config: {
     enabled: true,
     doNotRemoveBlobs: false
   },
   parseXml: {
-    enabled: true
+    enabled: true,
+    options: {
+    }
   },
-
-  /* XML from Acos:
-ArchiveData {
-string fnr
-string Fornavn
-string Etternavn
-string Adresse
-string Postnr
-string Poststed
-string Mobilnr
-string Epost
-}
-
-  */
   syncPrivatePerson: {
     enabled: true,
     options: {
@@ -41,18 +28,17 @@ string Epost
     options: {
       mapper: (flowStatus, base64, attachments) => {
         const xmlData = flowStatus.parseXml.result.ArchiveData
-        const caseNumber = nodeEnv === 'production' ? '23/38867' : '23/00024'
         return {
-
           service: 'DocumentService',
           method: 'CreateDocument',
+          secure: false,
           parameter: {
             Category: 'Dokument inn',
             Contacts: [
               {
                 ReferenceNumber: xmlData.Fnr,
                 Role: 'Avsender',
-                IsUnofficial: false
+                IsUnofficial: true
               }
             ],
             Files: [
@@ -61,25 +47,25 @@ string Epost
                 Category: '1',
                 Format: 'pdf',
                 Status: 'F',
-                Title: 'Jakt på kystsel',
+                Title: 'Taushetserklæring',
                 VersionFormat: 'A'
               }
             ],
             Status: 'J',
             DocumentDate: new Date().toISOString(),
-            Title: 'Jakt på kystsel',
-            UnofficialTitle: 'Jakt på kystsel',
+            Title: 'Taushetserklæring',
+            UnofficialTitle: `Taushetserklæring - ${xmlData.Fornavn} ${xmlData.Etternavn}`,
             Archive: 'Saksdokument',
-            CaseNumber: caseNumber,
-            ResponsibleEnterpriseNumber: nodeEnv === 'production' ? '43000' : '43000', // Dette finner du i p360, ved å trykke "Avansert Søk" > "Kontakt" > "Utvidet Søk" > så søker du etter det du trenger Eks: "Søkenavn": %Idrett%. Trykk på kontakten og se etter org nummer.
-            AccessCode: 'U',
-            Paragraph: '',
-            AccessGroup: 'Alle'
+            CaseNumber: nodeEnv === 'production' ? '24/04698' : '',
+            ResponsibleEnterpriseRecno: nodeEnv === 'production' ? '200011' : '200016',
+            documentDate: new Date().toISOString(),
+            AccessCode: '26',
+            Paragraph: 'Offl. § 26 femte ledd',
+            AccessGroup: 'Seksjon Digitale tjenester'
           }
         }
       }
     }
-
   },
 
   signOff: {
@@ -89,24 +75,23 @@ string Epost
   closeCase: {
     enabled: false
   },
-
+  groundControl: {
+    enabled: true // Files will be copied to GROUND_CONTROL_STORAGE_ACCOUNT_CONTAINER_NAME, and will be downloaded on local server (./ground-control/index.js)
+  },
   statistics: {
     enabled: true,
     options: {
       mapper: (flowStatus) => {
         // Mapping av verdier fra XML-avleveringsfil fra Acos. Alle properties under må fylles ut og ha verdier
         return {
-          company: 'KRIF',
-          department: 'Seksjon for kultur, idrett og friluftsliv',
+          company: 'Digitale tjenester',
+          department: 'Seksjon digitale tjenester',
           description, // Required. A description of what the statistic element represents
-          type: 'Jakt på kystsel', // Required. A short searchable type-name that distinguishes the statistic element
+          type: 'Taushetserklæring', // Required. A short searchable type-name that distinguishes the statistic element
           // optional fields:
           documentNumber: flowStatus.archive.result.DocumentNumber // Optional. anything you like
         }
       }
     }
-  },
-  failOnPurpose: {
-    enabled: false
   }
 }
